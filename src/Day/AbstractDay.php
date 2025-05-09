@@ -13,6 +13,10 @@ namespace Speicher210\BusinessHours\Day;
 
 use InvalidArgumentException;
 use OutOfBoundsException;
+use Psl\Iter;
+use Psl\Str;
+use Psl\Type;
+use Psl\Vec;
 use Speicher210\BusinessHours\Day\Time\Time;
 use Speicher210\BusinessHours\Day\Time\TimeInterval;
 use Speicher210\BusinessHours\Day\Time\TimeIntervalInterface;
@@ -22,9 +26,6 @@ use function assert;
 use function count;
 use function end;
 use function max;
-use function reset;
-use function Safe\sprintf;
-use function Safe\usort;
 
 abstract class AbstractDay implements DayInterface
 {
@@ -70,7 +71,7 @@ abstract class AbstractDay implements DayInterface
         return $this->openingHoursIntervals;
     }
 
-    public function getClosestPreviousOpeningHoursInterval(Time $time): ?TimeIntervalInterface
+    public function getClosestPreviousOpeningHoursInterval(Time $time): TimeIntervalInterface|null
     {
         foreach ($this->openingHoursIntervals as $openingHoursInterval) {
             if ($openingHoursInterval->contains($time)) {
@@ -81,7 +82,7 @@ abstract class AbstractDay implements DayInterface
         return $this->getPreviousOpeningHoursInterval($time);
     }
 
-    public function getClosestNextOpeningHoursInterval(Time $time): ?TimeIntervalInterface
+    public function getClosestNextOpeningHoursInterval(Time $time): TimeIntervalInterface|null
     {
         foreach ($this->openingHoursIntervals as $openingHoursInterval) {
             if ($openingHoursInterval->contains($time)) {
@@ -92,7 +93,7 @@ abstract class AbstractDay implements DayInterface
         return $this->getNextOpeningHoursInterval($time);
     }
 
-    public function getPreviousOpeningHoursInterval(Time $time): ?TimeIntervalInterface
+    public function getPreviousOpeningHoursInterval(Time $time): TimeIntervalInterface|null
     {
         $closestTime     = null;
         $closestInterval = null;
@@ -120,7 +121,7 @@ abstract class AbstractDay implements DayInterface
         return $closestInterval;
     }
 
-    public function getNextOpeningHoursInterval(Time $time): ?TimeIntervalInterface
+    public function getNextOpeningHoursInterval(Time $time): TimeIntervalInterface|null
     {
         $closestTime     = null;
         $closestInterval = null;
@@ -178,7 +179,7 @@ abstract class AbstractDay implements DayInterface
     protected function setDayOfWeek(int $dayOfWeek): void
     {
         if (! isset(self::DAYS_OF_WEEK[$dayOfWeek])) {
-            throw new OutOfBoundsException(sprintf('Invalid day of week "%s".', $dayOfWeek));
+            throw new OutOfBoundsException(Str\format('Invalid day of week "%s".', $dayOfWeek));
         }
 
         $this->dayOfWeek = $dayOfWeek;
@@ -199,7 +200,7 @@ abstract class AbstractDay implements DayInterface
 
         foreach ($openingHoursIntervals as $interval) {
             if (! $interval instanceof TimeIntervalInterface) {
-                throw new InvalidArgumentException(sprintf('Interval must be a %s', TimeIntervalInterface::class));
+                throw new InvalidArgumentException(Str\format('Interval must be a %s', TimeIntervalInterface::class));
             }
 
             $intervals[] = $interval;
@@ -215,21 +216,19 @@ abstract class AbstractDay implements DayInterface
      */
     protected function flattenOpeningHoursIntervals(array $openingHoursIntervals): array
     {
-        usort(
+        $sortedOpeningHoursIntervals = Vec\sort(
             $openingHoursIntervals,
-            static function (TimeIntervalInterface $a, TimeIntervalInterface $b) {
-                return $a->getStart() > $b->getStart() ? 1 : -1;
-            }
+            static fn (TimeIntervalInterface $a, TimeIntervalInterface $b): int => $a->getStart()->compareTo($b->getStart()),
         );
 
         $intervals = [];
-        /** @var TimeInterval $tmpInterval */
-        $tmpInterval = reset($openingHoursIntervals);
-        foreach ($openingHoursIntervals as $interval) {
-            if ($interval->getStart() <= $tmpInterval->getEnd()) {
+
+        $tmpInterval = Type\instance_of(TimeIntervalInterface::class)->coerce(Iter\first($sortedOpeningHoursIntervals));
+        foreach ($sortedOpeningHoursIntervals as $interval) {
+            if ($interval->getStart()->lessThanOrEqual($tmpInterval->getEnd())) {
                 $tmpInterval = new TimeInterval(
                     $tmpInterval->getStart(),
-                    max($tmpInterval->getEnd(), $interval->getEnd())
+                    max($tmpInterval->getEnd(), $interval->getEnd()),
                 );
             } else {
                 $intervals[] = $tmpInterval;
