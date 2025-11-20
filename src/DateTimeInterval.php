@@ -7,6 +7,7 @@ namespace Speicher210\BusinessHours;
 use DateTimeInterface;
 use InvalidArgumentException;
 use JsonSerializable;
+use Override;
 use Psl\Str;
 
 class DateTimeInterval implements JsonSerializable
@@ -50,6 +51,7 @@ class DateTimeInterval implements JsonSerializable
     /**
      * @return array<string,DateTimeInterface>
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return [

@@ -6,14 +6,14 @@ namespace Speicher210\BusinessHours\Test\Day;
 
 use InvalidArgumentException;
 use OutOfBoundsException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Psl\Json;
 use Speicher210\BusinessHours\Day\Day;
 use Speicher210\BusinessHours\Day\DayBuilder;
 use Speicher210\BusinessHours\Day\DayInterface;
 use Speicher210\BusinessHours\Day\Time\Time;
 use Speicher210\BusinessHours\Day\Time\TimeInterval;
-
-use function Safe\json_encode;
 
 class DayTest extends TestCase
 {
@@ -29,7 +29,7 @@ class DayTest extends TestCase
                 ['18:30', '19:00'],
                 ['18:35', '18:45'],
                 ['09:15', '12:00'],
-            ]
+            ],
         );
 
         $expected = [
@@ -38,7 +38,7 @@ class DayTest extends TestCase
         ];
         self::assertEquals(
             $expected,
-            $day->getOpeningHoursIntervals()
+            $day->getOpeningHoursIntervals(),
         );
     }
 
@@ -122,7 +122,7 @@ class DayTest extends TestCase
     {
         $day          = DayBuilder::fromArray(
             Day::WEEK_DAY_MONDAY,
-            [['09:30', '10 AM'], ['12:15', '2 pm'], ['14:30', '18:20'], ['19:25', '20:00']]
+            [['09:30', '10 AM'], ['12:15', '2 pm'], ['14:30', '18:20'], ['19:25', '20:00']],
         );
         $nextInterval = $day->getPreviousOpeningHoursInterval(new Time(13, 0));
 
@@ -155,7 +155,7 @@ class DayTest extends TestCase
     {
         $day          = DayBuilder::fromArray(
             Day::WEEK_DAY_MONDAY,
-            [['09:00', '10 AM'], ['12:15', '2 pm'], ['14:30', '18:20'], ['19:25', '20:00']]
+            [['09:00', '10 AM'], ['12:15', '2 pm'], ['14:30', '18:20'], ['19:25', '20:00']],
         );
         $nextInterval = $day->getNextOpeningHoursInterval(new Time(13, 0));
 
@@ -221,9 +221,8 @@ class DayTest extends TestCase
      * @param int  $hours    The hours to test.
      * @param int  $minutes  The minutes to test.
      * @param bool $expected The expected value.
-     *
-     * @dataProvider dataProviderTestIsWithinOpeningHours
      */
+    #[DataProvider('dataProviderTestIsWithinOpeningHours')]
     public function testIsWithinOpeningHours(Day $day, int $hours, int $minutes, bool $expected): void
     {
         self::assertEquals($expected, $day->isWithinOpeningHours(new Time($hours, $minutes)));
@@ -239,12 +238,12 @@ class DayTest extends TestCase
     {
         $day = DayBuilder::fromArray(
             DayInterface::WEEK_DAY_MONDAY,
-            [['12:00', '2 pm'], ['14:30', '18:30'], ['09:00', '10 AM']]
+            [['12:00', '2 pm'], ['14:30', '18:30'], ['09:00', '10 AM']],
         );
 
         self::assertJsonStringEqualsJsonFile(
             __DIR__ . '/Expected/Day/testJsonSerialize.json',
-            json_encode($day)
+            Json\encode($day),
         );
     }
 

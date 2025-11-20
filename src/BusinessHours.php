@@ -15,6 +15,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use InvalidArgumentException;
+use Override;
 use Psl\Str;
 use Speicher210\BusinessHours\Day\DayInterface;
 use Speicher210\BusinessHours\Day\Time\Time;
@@ -43,6 +44,7 @@ class BusinessHours implements BusinessHoursInterface
         $this->timezone = $timezone ?? new DateTimeZone(date_default_timezone_get());
     }
 
+    #[Override]
     public function getTimezone(): DateTimeZone
     {
         return $this->timezone;
@@ -51,6 +53,7 @@ class BusinessHours implements BusinessHoursInterface
     /**
      * @return DayInterface[]
      */
+    #[Override]
     public function getDays(): array
     {
         return array_values($this->days);
@@ -74,6 +77,7 @@ class BusinessHours implements BusinessHoursInterface
         }
     }
 
+    #[Override]
     public function within(DateTimeInterface $date): bool
     {
         $tmpDate = DateTimeImmutable::createFromInterface($date)->setTimezone($this->timezone);
@@ -86,6 +90,7 @@ class BusinessHours implements BusinessHoursInterface
         return false;
     }
 
+    #[Override]
     public function getNextChangeDateTime(DateTimeInterface $date): DateTimeInterface
     {
         $tmpDate = DateTimeImmutable::createFromInterface($date)->setTimezone($this->timezone);
@@ -100,6 +105,7 @@ class BusinessHours implements BusinessHoursInterface
         return $dateInterval->getStart();
     }
 
+    #[Override]
     public function getPreviousChangeDateTime(DateTimeInterface $date): DateTimeInterface
     {
         $dateInterval = $this->getPreviousClosestInterval(
@@ -117,6 +123,7 @@ class BusinessHours implements BusinessHoursInterface
     /**
      * @return array<string,mixed>
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return [

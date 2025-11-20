@@ -21,28 +21,23 @@
       "role": "Developer"
     }
   ],
-  "homepage": "https://github.com/Speicher210/business-hours",
+  "homepage": "https://github.com/protung/business-hours",
   "require": {
-    "php": "~8.2.0 || ~8.3.0",
+    "php": "~8.3.0 || ~8.4.0 || ~8.5.0",
     "ext-json": "*",
-    "azjezz/psl": "^3.0.0",
+    "azjezz/psl": "^3.3.0 || ^4.0.0",
     "webmozart/assert": "^1.9"
   },
   "require-dev": {
-    "doctrine/coding-standard": "^10.0",
-    "ekino/phpstan-banned-code": "^1.0",
-    "ergebnis/composer-normalize": "^2.29",
-    "phpstan/phpstan": "^1.9.2",
-    "phpstan/phpstan-deprecation-rules": "^1.0",
-    "phpstan/phpstan-phpunit": "^1.2.2",
-    "phpstan/phpstan-strict-rules": "^1.4.4",
-    "phpstan/phpstan-webmozart-assert": "^1.2.2",
-    "phpunit/phpunit": "^9.5.26",
-    "psalm/plugin-phpunit": "^0.18.4",
-    "vimeo/psalm": "^5.1"
-  },
-  "conflict": {
-    "nikic/php-parser": "<4.13.2"
+    "doctrine/coding-standard": "^14.0.0",
+    "ekino/phpstan-banned-code": "^3.0.0",
+    "ergebnis/composer-normalize": "^2.48.2",
+    "phpstan/phpstan": "^2.1.32",
+    "phpstan/phpstan-deprecation-rules": "^2.0.3",
+    "phpstan/phpstan-phpunit": "^2.0.8",
+    "phpstan/phpstan-strict-rules": "^2.0.7",
+    "phpstan/phpstan-webmozart-assert": "^2.0.0",
+    "phpunit/phpunit": "^12.4.3"
   },
   "autoload": {
     "psr-4": {
@@ -69,20 +64,13 @@
   },
   "scripts": {
     "analyse": [
-      "@analyse-phpstan",
-      "@analyse-psalm"
+      "@analyse-phpstan"
     ],
     "analyse-phpstan": [
-      "phpstan analyse"
+      "phpstan analyse --memory-limit=512M"
     ],
     "analyse-phpstan-update": [
       "phpstan analyse --generate-baseline"
-    ],
-    "analyse-psalm": [
-      "psalm --show-info=false"
-    ],
-    "analyse-psalm-update": [
-      "psalm --set-baseline=psalm.baseline.xml"
     ],
     "check": [
       "composer validate",
