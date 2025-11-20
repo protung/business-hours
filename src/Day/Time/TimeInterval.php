@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Speicher210\BusinessHours\Day\Time;
 
 use InvalidArgumentException;
+use Override;
 use Psl\Str;
 
 class TimeInterval implements TimeIntervalInterface
@@ -36,16 +37,19 @@ class TimeInterval implements TimeIntervalInterface
         return new static(Time::fromString($startTime), Time::fromString($endTime));
     }
 
+    #[Override]
     public function contains(Time $time): bool
     {
         return $this->start->isBeforeOrEqual($time) && $this->end->isAfterOrEqual($time);
     }
 
+    #[Override]
     public function getStart(): Time
     {
         return $this->start;
     }
 
+    #[Override]
     public function getEnd(): Time
     {
         return $this->end;
@@ -54,6 +58,7 @@ class TimeInterval implements TimeIntervalInterface
     /**
      * @return array<string,Time>
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return [

@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Speicher210\BusinessHours\Test\Day\Time;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Psl\Json;
 use Speicher210\BusinessHours\Day\Time\Time;
 use Speicher210\BusinessHours\Day\Time\TimeInterval;
-
-use function Safe\json_encode;
 
 class TimeIntervalTest extends TestCase
 {
@@ -61,9 +61,8 @@ class TimeIntervalTest extends TestCase
      * @param int          $hours    The hours to test.
      * @param int          $minutes  The minutes to test.
      * @param bool         $expected The expected value.
-     *
-     * @dataProvider dataProviderTestContains
      */
+    #[DataProvider('dataProviderTestContains')]
     public function testContains(TimeInterval $interval, int $hours, int $minutes, bool $expected): void
     {
         self::assertEquals($interval->contains(new Time($hours, $minutes)), $expected);
@@ -75,7 +74,7 @@ class TimeIntervalTest extends TestCase
 
         self::assertJsonStringEqualsJsonFile(
             __DIR__ . '/Expected/TimeInterval/testJsonSerialize.json',
-            json_encode($interval)
+            Json\encode($interval),
         );
     }
 

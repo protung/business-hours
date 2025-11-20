@@ -6,11 +6,11 @@ namespace Speicher210\BusinessHours\Test\Day\Time;
 
 use DateTime;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Psl\Json;
+use Psl\Str;
 use Speicher210\BusinessHours\Day\Time\Time;
-
-use function Safe\json_encode;
-use function Safe\sprintf;
 
 class TimeTest extends TestCase
 {
@@ -30,9 +30,7 @@ class TimeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderTestInstantiateTimeWithInvalidData
-     */
+    #[DataProvider('dataProviderTestInstantiateTimeWithInvalidData')]
     public function testInstantiateTimeWithInvalidData(int $hours, int $minutes, int $seconds): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -56,13 +54,12 @@ class TimeTest extends TestCase
 
     /**
      * @param mixed $string The string to test.
-     *
-     * @dataProvider dataProviderTestFromStringInvalid
      */
-    public function testFromStringInvalid($string): void
+    #[DataProvider('dataProviderTestFromStringInvalid')]
+    public function testFromStringInvalid(mixed $string): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf('Invalid time "%s".', $string));
+        $this->expectExceptionMessage(Str\format('Invalid time "%s".', $string));
 
         Time::fromString($string);
     }
@@ -81,14 +78,12 @@ class TimeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderTestFromString
-     */
+    #[DataProvider('dataProviderTestFromString')]
     public function testFromString(
         string $string,
         int $expectedHours,
         int $expectedMinutes,
-        int $expectedSeconds
+        int $expectedSeconds,
     ): void {
         $time = Time::fromString($string);
         self::assertEquals($expectedHours, $time->hours());
@@ -107,9 +102,7 @@ class TimeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderTestFromDate
-     */
+    #[DataProvider('dataProviderTestFromDate')]
     public function testFromDate(DateTime $date, int $expectedHours, int $expectedMinutes, int $expectedSeconds): void
     {
         $time = Time::fromDate($date);
@@ -129,9 +122,7 @@ class TimeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderTestFromSecondsInvalid
-     */
+    #[DataProvider('dataProviderTestFromSecondsInvalid')]
     public function testFromSecondsInvalid(int $seconds, string $expectedMessage): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -155,9 +146,7 @@ class TimeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderTestFromSeconds
-     */
+    #[DataProvider('dataProviderTestFromSeconds')]
     public function testFromSeconds(int $seconds, int $expectedHours, int $expectedMinutes, int $expectedSeconds): void
     {
         $time = Time::fromSeconds($seconds);
@@ -180,9 +169,7 @@ class TimeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderTestIsAfterOrEqual
-     */
+    #[DataProvider('dataProviderTestIsAfterOrEqual')]
     public function testIsAfterOrEqual(Time $time, int $hours, int $minutes, bool $expected): void
     {
         self::assertEquals($time->isAfterOrEqual(new Time($hours, $minutes)), $expected);
@@ -202,9 +189,7 @@ class TimeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderTestIsBeforeOrEqual
-     */
+    #[DataProvider('dataProviderTestIsBeforeOrEqual')]
     public function testIsBeforeOrEqual(Time $time, int $hours, int $minutes, bool $expected): void
     {
         self::assertEquals($time->isBeforeOrEqual(new Time($hours, $minutes)), $expected);
@@ -224,9 +209,7 @@ class TimeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderTestIsEqual
-     */
+    #[DataProvider('dataProviderTestIsEqual')]
     public function testIsEqual(Time $time, int $hours, int $minutes, bool $expected): void
     {
         self::assertEquals($time->isEqual(new Time($hours, $minutes)), $expected);
@@ -244,14 +227,12 @@ class TimeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderTestToSeconds
-     */
+    #[DataProvider('dataProviderTestToSeconds')]
     public function testToSeconds(
         int $expectedTimeRepresentationInSeconds,
         int $hours,
         int $minutes,
-        int $seconds
+        int $seconds,
     ): void {
         $time = new Time($hours, $minutes, $seconds);
         self::assertEquals($expectedTimeRepresentationInSeconds, $time->toSeconds());
@@ -419,14 +400,12 @@ class TimeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderTestAddTime
-     */
+    #[DataProvider('dataProviderTestAddTime')]
     public function testAddTime(Time $startingTime, Time $timeToAdd, Time $expected): void
     {
         self::assertEquals(
             $expected,
-            $startingTime->addTime($timeToAdd)
+            $startingTime->addTime($timeToAdd),
         );
     }
 
@@ -450,14 +429,12 @@ class TimeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderTestSubtractTime
-     */
+    #[DataProvider('dataProviderTestSubtractTime')]
     public function testSubtractTime(Time $startingTime, Time $timeToSubtract, Time $expected): void
     {
         self::assertEquals(
             $expected,
-            $startingTime->subtractTime($timeToSubtract)
+            $startingTime->subtractTime($timeToSubtract),
         );
     }
 
@@ -502,9 +479,7 @@ class TimeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderTestRoundToMinutes
-     */
+    #[DataProvider('dataProviderTestRoundToMinutes')]
     public function testRoundToMinutes(Time $time, int $precision, int $roundingMode, Time $expected): void
     {
         $actual = $time->roundToMinutes($precision, $roundingMode);
@@ -533,9 +508,7 @@ class TimeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderTestRoundToHour
-     */
+    #[DataProvider('dataProviderTestRoundToHour')]
     public function testRoundToHour(Time $time, int $roundingMode, Time $expected): void
     {
         $actual = $time->roundToHour($roundingMode);
@@ -630,7 +603,7 @@ class TimeTest extends TestCase
 
         self::assertJsonStringEqualsJsonFile(
             __DIR__ . '/Expected/Time/testJsonSerialize.json',
-            json_encode($time)
+            Json\encode($time),
         );
     }
 }

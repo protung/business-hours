@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Speicher210\BusinessHours\Day;
 
+use Override;
 use Speicher210\BusinessHours\Day\Time\AllDayTimeInterval;
 
 /**
@@ -21,8 +22,9 @@ class AllDay extends Day
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         $data           = parent::jsonSerialize();

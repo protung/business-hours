@@ -17,13 +17,13 @@ use Speicher210\BusinessHours\Day\Time\TimeIntervalInterface;
 
 interface DayInterface extends JsonSerializable
 {
-    public const WEEK_DAY_MONDAY    = 1;
-    public const WEEK_DAY_TUESDAY   = 2;
-    public const WEEK_DAY_WEDNESDAY = 3;
-    public const WEEK_DAY_THURSDAY  = 4;
-    public const WEEK_DAY_FRIDAY    = 5;
-    public const WEEK_DAY_SATURDAY  = 6;
-    public const WEEK_DAY_SUNDAY    = 7;
+    public const int WEEK_DAY_MONDAY    = 1;
+    public const int WEEK_DAY_TUESDAY   = 2;
+    public const int WEEK_DAY_WEDNESDAY = 3;
+    public const int WEEK_DAY_THURSDAY  = 4;
+    public const int WEEK_DAY_FRIDAY    = 5;
+    public const int WEEK_DAY_SATURDAY  = 6;
+    public const int WEEK_DAY_SUNDAY    = 7;
 
     public function getDayOfWeek(): int;
 

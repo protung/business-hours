@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Speicher210\BusinessHours\Day;
 
+use Override;
+
 class Day extends AbstractDay
 {
     /**
@@ -25,6 +27,7 @@ class Day extends AbstractDay
     /**
      * @return array<string,mixed>
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return [

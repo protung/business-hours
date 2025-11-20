@@ -1,6 +1,25 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
+			identifier: equal.notAllowed
+			count: 2
+			path: src/BusinessHours.php
+
+		-
+			message: '#^Unsafe usage of new static\(\)\.$#'
+			identifier: new.static
 			count: 1
 			path: src/Day/Time/TimeInterval.php
+
+		-
+			message: '#^Parameter \#1 \$roundingMode of method Speicher210\\BusinessHours\\Day\\Time\\Time\:\:roundToHour\(\) expects 1\|2\|5\|6, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Day/Time/TimeTest.php
+
+		-
+			message: '#^Parameter \#2 \$roundingMode of method Speicher210\\BusinessHours\\Day\\Time\\Time\:\:roundToMinutes\(\) expects 1\|2\|5\|6, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Day/Time/TimeTest.php

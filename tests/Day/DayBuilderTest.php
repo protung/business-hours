@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Speicher210\BusinessHours\Test\Day;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Speicher210\BusinessHours\Day\AllDay;
 use Speicher210\BusinessHours\Day\Day;
@@ -55,9 +56,8 @@ class DayBuilderTest extends TestCase
 
     /**
      * @param mixed[] $data The data to test.
-     *
-     * @dataProvider dataProviderTestFromAssociativeArrayThrowsExceptionIfArrayStructureIsNotValid
      */
+    #[DataProvider('dataProviderTestFromAssociativeArrayThrowsExceptionIfArrayStructureIsNotValid')]
     public function testFromAssociativeArrayThrowsExceptionIfArrayStructureIsNotValid(array $data): void
     {
         $this->expectExceptionMessage('Array is not valid.');

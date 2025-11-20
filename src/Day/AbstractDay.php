@@ -13,6 +13,7 @@ namespace Speicher210\BusinessHours\Day;
 
 use InvalidArgumentException;
 use OutOfBoundsException;
+use Override;
 use Psl\Iter;
 use Psl\Str;
 use Psl\Type;
@@ -29,7 +30,7 @@ use function max;
 
 abstract class AbstractDay implements DayInterface
 {
-    private const DAYS_OF_WEEK = [
+    private const array DAYS_OF_WEEK = [
         DayInterface::WEEK_DAY_MONDAY => 'Monday',
         DayInterface::WEEK_DAY_TUESDAY => 'Tuesday',
         DayInterface::WEEK_DAY_WEDNESDAY => 'Wednesday',
@@ -53,24 +54,28 @@ abstract class AbstractDay implements DayInterface
         $this->setOpeningHoursIntervals($openingHoursIntervals);
     }
 
+    #[Override]
     public function getDayOfWeek(): int
     {
         return $this->dayOfWeek;
     }
 
+    #[Override]
     public function getDayOfWeekName(): string
     {
         return self::DAYS_OF_WEEK[$this->dayOfWeek];
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
+    #[Override]
     public function getOpeningHoursIntervals(): array
     {
         return $this->openingHoursIntervals;
     }
 
+    #[Override]
     public function getClosestPreviousOpeningHoursInterval(Time $time): TimeIntervalInterface|null
     {
         foreach ($this->openingHoursIntervals as $openingHoursInterval) {
@@ -82,6 +87,7 @@ abstract class AbstractDay implements DayInterface
         return $this->getPreviousOpeningHoursInterval($time);
     }
 
+    #[Override]
     public function getClosestNextOpeningHoursInterval(Time $time): TimeIntervalInterface|null
     {
         foreach ($this->openingHoursIntervals as $openingHoursInterval) {
@@ -93,6 +99,7 @@ abstract class AbstractDay implements DayInterface
         return $this->getNextOpeningHoursInterval($time);
     }
 
+    #[Override]
     public function getPreviousOpeningHoursInterval(Time $time): TimeIntervalInterface|null
     {
         $closestTime     = null;
@@ -121,6 +128,7 @@ abstract class AbstractDay implements DayInterface
         return $closestInterval;
     }
 
+    #[Override]
     public function getNextOpeningHoursInterval(Time $time): TimeIntervalInterface|null
     {
         $closestTime     = null;
@@ -149,11 +157,13 @@ abstract class AbstractDay implements DayInterface
         return $closestInterval;
     }
 
+    #[Override]
     public function getOpeningTime(): Time
     {
         return $this->openingHoursIntervals[0]->getStart();
     }
 
+    #[Override]
     public function getClosingTime(): Time
     {
         $interval = end($this->openingHoursIntervals);
@@ -162,6 +172,7 @@ abstract class AbstractDay implements DayInterface
         return $interval->getEnd();
     }
 
+    #[Override]
     public function isWithinOpeningHours(Time $time): bool
     {
         foreach ($this->openingHoursIntervals as $interval) {

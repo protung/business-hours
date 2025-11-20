@@ -8,6 +8,7 @@ use DateTime;
 use DateTimeInterface;
 use InvalidArgumentException;
 use JsonSerializable;
+use Override;
 use Psl\Math;
 use Psl\Str;
 use Psl\Type;
@@ -22,13 +23,13 @@ use const PHP_ROUND_HALF_UP;
 
 class Time implements JsonSerializable
 {
-    public const ROUND_HALF_UP = PHP_ROUND_HALF_UP;
+    public const int ROUND_HALF_UP = PHP_ROUND_HALF_UP;
 
-    public const ROUND_HALF_DOWN = PHP_ROUND_HALF_DOWN;
+    public const int ROUND_HALF_DOWN = PHP_ROUND_HALF_DOWN;
 
-    public const ROUND_UP = 5;
+    public const int ROUND_UP = 5;
 
-    public const ROUND_DOWN = 6;
+    public const int ROUND_DOWN = 6;
 
     protected int $hours;
 
@@ -393,6 +394,7 @@ class Time implements JsonSerializable
     /**
      * @return array<string,int>
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
