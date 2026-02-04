@@ -26,18 +26,18 @@
     "php": "~8.3.0 || ~8.4.0 || ~8.5.0",
     "ext-json": "*",
     "azjezz/psl": "^3.3.0 || ^4.0.0",
-    "webmozart/assert": "^1.9"
+    "webmozart/assert": "^1.12.1 || ^2.0.0"
   },
   "require-dev": {
     "doctrine/coding-standard": "^14.0.0",
     "ekino/phpstan-banned-code": "^3.0.0",
-    "ergebnis/composer-normalize": "^2.48.2",
-    "phpstan/phpstan": "^2.1.32",
+    "ergebnis/composer-normalize": "^2.49.0",
+    "phpstan/phpstan": "^2.1.38",
     "phpstan/phpstan-deprecation-rules": "^2.0.3",
-    "phpstan/phpstan-phpunit": "^2.0.8",
-    "phpstan/phpstan-strict-rules": "^2.0.7",
+    "phpstan/phpstan-phpunit": "^2.0.12",
+    "phpstan/phpstan-strict-rules": "^2.0.8",
     "phpstan/phpstan-webmozart-assert": "^2.0.0",
-    "phpunit/phpunit": "^12.4.3"
+    "phpunit/phpunit": "^12.5.8"
   },
   "autoload": {
     "psr-4": {
