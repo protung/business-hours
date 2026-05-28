@@ -25,19 +25,19 @@
   "require": {
     "php": "~8.3.0 || ~8.4.0 || ~8.5.0",
     "ext-json": "*",
-    "azjezz/psl": "^3.3.0 || ^4.0.0",
+    "php-standard-library/php-standard-library": "^3.3.0 || ^4.0.0 || ^5.0.0 || ^6.0.0",
     "webmozart/assert": "^1.12.1 || ^2.0.0"
   },
   "require-dev": {
     "doctrine/coding-standard": "^14.0.0",
-    "ekino/phpstan-banned-code": "^3.0.0",
-    "ergebnis/composer-normalize": "^2.49.0",
-    "phpstan/phpstan": "^2.1.38",
-    "phpstan/phpstan-deprecation-rules": "^2.0.3",
-    "phpstan/phpstan-phpunit": "^2.0.12",
-    "phpstan/phpstan-strict-rules": "^2.0.8",
+    "ekino/phpstan-banned-code": "^3.2.0",
+    "ergebnis/composer-normalize": "^2.52.0",
+    "phpstan/phpstan": "^2.2.0",
+    "phpstan/phpstan-deprecation-rules": "^2.0.4",
+    "phpstan/phpstan-phpunit": "^2.0.16",
+    "phpstan/phpstan-strict-rules": "^2.0.11",
     "phpstan/phpstan-webmozart-assert": "^2.0.0",
-    "phpunit/phpunit": "^12.5.8"
+    "phpunit/phpunit": "^12.5.28"
   },
   "autoload": {
     "psr-4": {
