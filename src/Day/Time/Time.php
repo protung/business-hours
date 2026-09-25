@@ -9,6 +9,7 @@ use DateTime;
 use DateTimeInterface;
 use InvalidArgumentException;
 use JsonSerializable;
+use NoDiscard;
 use Override;
 use Psl\Math;
 use Psl\Str;
@@ -151,6 +152,7 @@ class Time implements JsonSerializable
         return $this->hours;
     }
 
+    #[NoDiscard]
     public function withHours(int $hours): self
     {
         return new self($hours, $this->minutes, $this->seconds);
@@ -161,6 +163,7 @@ class Time implements JsonSerializable
      *
      * @throws InvalidArgumentException If the result is not a valid time.
      */
+    #[NoDiscard]
     public function addHours(int $hours): self
     {
         return $this->addSeconds($hours * 3600);
@@ -171,6 +174,7 @@ class Time implements JsonSerializable
      *
      * @throws InvalidArgumentException If the result is not a valid time.
      */
+    #[NoDiscard]
     public function subtractHours(int $hours): self
     {
         return $this->subtractSeconds($hours * 3600);
@@ -181,6 +185,7 @@ class Time implements JsonSerializable
         return $this->minutes;
     }
 
+    #[NoDiscard]
     public function withMinutes(int $minutes): self
     {
         return new self($this->hours, $minutes, $this->seconds);
@@ -191,6 +196,7 @@ class Time implements JsonSerializable
      *
      * @throws InvalidArgumentException If the result is not a valid time.
      */
+    #[NoDiscard]
     public function addMinutes(int $minutes): self
     {
         return $this->addSeconds($minutes * 60);
@@ -201,6 +207,7 @@ class Time implements JsonSerializable
      *
      * @throws InvalidArgumentException If the result is not a valid time.
      */
+    #[NoDiscard]
     public function subtractMinutes(int $minutes): self
     {
         return $this->subtractSeconds($minutes * 60);
@@ -211,6 +218,7 @@ class Time implements JsonSerializable
         return $this->seconds;
     }
 
+    #[NoDiscard]
     public function withSeconds(int $seconds): self
     {
         return new self($this->hours, $this->minutes, $seconds);
@@ -221,6 +229,7 @@ class Time implements JsonSerializable
      *
      * @throws InvalidArgumentException If the result is not a valid time.
      */
+    #[NoDiscard]
     public function addSeconds(int $seconds): self
     {
         return self::fromSeconds($this->toSeconds() + $seconds);
@@ -231,11 +240,13 @@ class Time implements JsonSerializable
      *
      * @throws InvalidArgumentException If the result is not a valid time.
      */
+    #[NoDiscard]
     public function subtractSeconds(int $seconds): self
     {
         return self::fromSeconds($this->toSeconds() - $seconds);
     }
 
+    #[NoDiscard]
     public function addTime(Time $time): self
     {
         return $this
@@ -244,6 +255,7 @@ class Time implements JsonSerializable
             ->addSeconds($time->seconds());
     }
 
+    #[NoDiscard]
     public function subtractTime(Time $time): self
     {
         return $this
@@ -282,6 +294,7 @@ class Time implements JsonSerializable
      * @param int           $precision    Number of minutes to round.
      * @param self::ROUND_* $roundingMode The rounding mode. One of the ROUND_* constants.
      */
+    #[NoDiscard]
     public function roundToMinutes(int $precision, int $roundingMode = self::ROUND_HALF_UP): self
     {
         $roundingSeconds = $precision * 60;
@@ -307,6 +320,7 @@ class Time implements JsonSerializable
     /**
      * @param self::ROUND_* $roundingMode
      */
+    #[NoDiscard]
     public function roundToHour(int $roundingMode = self::ROUND_HALF_UP): self
     {
         return $this->roundToMinutes(60, $roundingMode);

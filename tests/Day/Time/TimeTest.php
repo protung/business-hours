@@ -274,7 +274,7 @@ class TimeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid time "24:00:01".');
 
-        $time->addHours(14);
+        $newTime = $time->addHours(14);
     }
 
     public function testSubtractHours(): void
@@ -294,7 +294,7 @@ class TimeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid time "-03:59:59".');
 
-        $time->subtractHours(14);
+        $newTime = $time->subtractHours(14);
     }
 
     public function testWithMinutes(): void
@@ -324,7 +324,7 @@ class TimeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid time "24:01:00".');
 
-        $time->addMinutes(1);
+        $newTime = $time->addMinutes(1);
     }
 
     public function testSubtractMinutes(): void
@@ -344,7 +344,7 @@ class TimeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid time "-00:01:00".');
 
-        $time->subtractMinutes(1);
+        $newTime = $time->subtractMinutes(1);
     }
 
     public function testWithSeconds(): void
@@ -374,7 +374,7 @@ class TimeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid time "24:00:01".');
 
-        $time->addSeconds(1);
+        $newTime = $time->addSeconds(1);
     }
 
     public function testSubtractSeconds(): void
@@ -394,7 +394,7 @@ class TimeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid time "-00:00:01".');
 
-        $time->subtractSeconds(1);
+        $newTime = $time->subtractSeconds(1);
     }
 
     /**
@@ -423,7 +423,7 @@ class TimeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid time "24:00:01".');
 
-        Time::fromString('22:45')->addTime(Time::fromString('01:15:01'));
+        $newTime = Time::fromString('22:45')->addTime(Time::fromString('01:15:01'));
     }
 
     /**
@@ -452,7 +452,7 @@ class TimeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid time "-00:00:01".');
 
-        Time::fromString('01:45')->subtractTime(Time::fromString('01:45:01'));
+        $newTime = Time::fromString('01:45')->subtractTime(Time::fromString('01:45:01'));
     }
 
     /**
