@@ -34,12 +34,6 @@ psl-array-functions = { enabled = false }
 psl-datetime = { enabled = false }
 psl-string-functions = { enabled = false }
 
-# Rules the code still violates, disabled until the violations are fixed
-strict-assertions = { enabled = false } # 30 errors
-explicit-octal = { enabled = false } # 12 errors
-readable-literal = { enabled = false } # 6 errors
-no-multi-assignments = { enabled = false } # 1 error
-
 [analyzer]
 plugins = ["psl"]
 find-unused-definitions = true
@@ -50,7 +44,5 @@ perform-heuristic-checks = true
 
 # Ignore a specific error code across the whole project
 ignore = [
-    "unhandled-thrown-type", # 208 errors
-    "possible-method-access-on-null", # 32 errors
-    "mixed-method-access", # 32 errors
+    "unhandled-thrown-type", # 204 errors
 ]

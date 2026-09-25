@@ -119,7 +119,7 @@ class TimeTest extends TestCase
     {
         return [
             [-1, 'Invalid time "-00:00:01".'],
-            [86401, 'Invalid time "24:00:01".'],
+            [86_401, 'Invalid time "24:00:01".'],
         ];
     }
 
@@ -142,8 +142,8 @@ class TimeTest extends TestCase
             [40, 0, 0, 40],
             [60, 0, 1, 0],
             [3600, 1, 0, 0],
-            [86400, 24, 0, 0],
-            [45296, 12, 34, 56],
+            [86_400, 24, 0, 0],
+            [45_296, 12, 34, 56],
         ];
     }
 
@@ -161,12 +161,12 @@ class TimeTest extends TestCase
      */
     public static function dataProviderTestIsAfterOrEqual(): array
     {
-        $time = new Time(20, 00);
+        $time = new Time(20, 0);
 
         return [
-            [$time, 18, 00, true],
+            [$time, 18, 0, true],
             [$time, 22, 15, false],
-            [$time, 20, 00, true],
+            [$time, 20, 0, true],
         ];
     }
 
@@ -181,12 +181,12 @@ class TimeTest extends TestCase
      */
     public static function dataProviderTestIsBeforeOrEqual(): array
     {
-        $time = new Time(20, 00);
+        $time = new Time(20, 0);
 
         return [
-            [$time, 18, 00, false],
+            [$time, 18, 0, false],
             [$time, 22, 15, true],
-            [$time, 20, 00, true],
+            [$time, 20, 0, true],
         ];
     }
 
@@ -201,12 +201,12 @@ class TimeTest extends TestCase
      */
     public static function dataProviderTestIsEqual(): array
     {
-        $time = new Time(20, 00);
+        $time = new Time(20, 0);
 
         return [
-            [$time, 18, 00, false],
+            [$time, 18, 0, false],
             [$time, 22, 15, false],
-            [$time, 20, 00, true],
+            [$time, 20, 0, true],
         ];
     }
 
@@ -222,9 +222,9 @@ class TimeTest extends TestCase
     public static function dataProviderTestToSeconds(): array
     {
         return [
-            [72000, 20, 0, 0],
-            [34200, 9, 30, 0],
-            [45296, 12, 34, 56],
+            [72_000, 20, 0, 0],
+            [34_200, 9, 30, 0],
+            [45_296, 12, 34, 56],
         ];
     }
 
@@ -245,8 +245,8 @@ class TimeTest extends TestCase
 
         $newTime = $time->withHours(10);
 
-        self::assertEquals('01:23:45', $time->asString());
-        self::assertEquals('10:23:45', $newTime->asString());
+        self::assertSame('01:23:45', $time->asString());
+        self::assertSame('10:23:45', $newTime->asString());
     }
 
     public function testAddHours(): void
@@ -255,8 +255,8 @@ class TimeTest extends TestCase
 
         $newTime = $time->addHours(2);
 
-        self::assertEquals('01:00:00', $time->asString());
-        self::assertEquals('03:00:00', $newTime->asString());
+        self::assertSame('01:00:00', $time->asString());
+        self::assertSame('03:00:00', $newTime->asString());
     }
 
     public function testAddHoursThrowsExceptionIfResultIsNotValid(): void
@@ -275,8 +275,8 @@ class TimeTest extends TestCase
 
         $newTime = $time->subtractHours(2);
 
-        self::assertEquals('11:00:00', $time->asString());
-        self::assertEquals('09:00:00', $newTime->asString());
+        self::assertSame('11:00:00', $time->asString());
+        self::assertSame('09:00:00', $newTime->asString());
     }
 
     public function testSubtractHoursThrowsExceptionIfResultIsNotValid(): void
@@ -295,8 +295,8 @@ class TimeTest extends TestCase
 
         $newTime = $time->withMinutes(32);
 
-        self::assertEquals('01:23:45', $time->asString());
-        self::assertEquals('01:32:45', $newTime->asString());
+        self::assertSame('01:23:45', $time->asString());
+        self::assertSame('01:32:45', $newTime->asString());
     }
 
     public function testAddMinutes(): void
@@ -305,8 +305,8 @@ class TimeTest extends TestCase
 
         $newTime = $time->addMinutes(100);
 
-        self::assertEquals('00:00:00', $time->asString());
-        self::assertEquals('01:40:00', $newTime->asString());
+        self::assertSame('00:00:00', $time->asString());
+        self::assertSame('01:40:00', $newTime->asString());
     }
 
     public function testAddMinutesThrowsExceptionIfResultIsNotValid(): void
@@ -325,8 +325,8 @@ class TimeTest extends TestCase
 
         $newTime = $time->subtractMinutes(100);
 
-        self::assertEquals('11:00:00', $time->asString());
-        self::assertEquals('09:20:00', $newTime->asString());
+        self::assertSame('11:00:00', $time->asString());
+        self::assertSame('09:20:00', $newTime->asString());
     }
 
     public function testSubtractMinutesThrowsExceptionIfResultIsNotValid(): void
@@ -345,8 +345,8 @@ class TimeTest extends TestCase
 
         $newTime = $time->withSeconds(54);
 
-        self::assertEquals('01:23:45', $time->asString());
-        self::assertEquals('01:23:54', $newTime->asString());
+        self::assertSame('01:23:45', $time->asString());
+        self::assertSame('01:23:54', $newTime->asString());
     }
 
     public function testAddSeconds(): void
@@ -355,8 +355,8 @@ class TimeTest extends TestCase
 
         $newTime = $time->addSeconds(3);
 
-        self::assertEquals('00:59:58', $time->asString());
-        self::assertEquals('01:00:01', $newTime->asString());
+        self::assertSame('00:59:58', $time->asString());
+        self::assertSame('01:00:01', $newTime->asString());
     }
 
     public function testAddSecondsThrowsExceptionIfResultIsNotValid(): void
@@ -375,8 +375,8 @@ class TimeTest extends TestCase
 
         $newTime = $time->subtractSeconds(100);
 
-        self::assertEquals('11:00:00', $time->asString());
-        self::assertEquals('10:58:20', $newTime->asString());
+        self::assertSame('11:00:00', $time->asString());
+        self::assertSame('10:58:20', $newTime->asString());
     }
 
     public function testSubtractSecondsThrowsExceptionIfResultIsNotValid(): void
@@ -480,6 +480,9 @@ class TimeTest extends TestCase
         ];
     }
 
+    /**
+     * @param Time::ROUND_* $roundingMode
+     */
     #[DataProvider('dataProviderTestRoundToMinutes')]
     public function testRoundToMinutes(Time $time, int $precision, int $roundingMode, Time $expected): void
     {
@@ -509,6 +512,9 @@ class TimeTest extends TestCase
         ];
     }
 
+    /**
+     * @param Time::ROUND_* $roundingMode
+     */
     #[DataProvider('dataProviderTestRoundToHour')]
     public function testRoundToHour(Time $time, int $roundingMode, Time $expected): void
     {
@@ -519,9 +525,9 @@ class TimeTest extends TestCase
 
     public function testCompareTo(): void
     {
-        self::assertEquals(1, Time::fromString('15:00:01')->compareTo(Time::fromString('15:00:00')));
-        self::assertEquals(0, Time::fromString('15:00')->compareTo(Time::fromString('15:00:00')));
-        self::assertEquals(-1, Time::fromString('15:00:00')->compareTo(Time::fromString('15:00:01')));
+        self::assertSame(1, Time::fromString('15:00:01')->compareTo(Time::fromString('15:00:00')));
+        self::assertSame(0, Time::fromString('15:00')->compareTo(Time::fromString('15:00:00')));
+        self::assertSame(-1, Time::fromString('15:00:00')->compareTo(Time::fromString('15:00:01')));
     }
 
     public function testCompareEqual(): void
@@ -529,7 +535,7 @@ class TimeTest extends TestCase
         $time1 = Time::fromString('15:00');
         $time2 = Time::fromString('15:00:00');
 
-        self::assertEquals(0, $time1->compareTo($time2));
+        self::assertSame(0, $time1->compareTo($time2));
         self::assertTrue($time1->equals($time2));
         self::assertTrue($time1->greaterThanOrEqual($time2));
         self::assertFalse($time1->greaterThan($time2));
@@ -542,7 +548,7 @@ class TimeTest extends TestCase
         $time1 = Time::fromString('15:00:01');
         $time2 = Time::fromString('15:00:00');
 
-        self::assertEquals(1, $time1->compareTo($time2));
+        self::assertSame(1, $time1->compareTo($time2));
         self::assertFalse($time1->equals($time2));
         self::assertTrue($time1->greaterThanOrEqual($time2));
         self::assertTrue($time1->greaterThan($time2));

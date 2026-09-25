@@ -33,11 +33,11 @@ class TimeIntervalTest extends TestCase
     {
         $interval = TimeInterval::fromString('08:00', '18:30');
 
-        self::assertEquals(8, $interval->getStart()->hours());
-        self::assertEquals(0, $interval->getStart()->minutes());
+        self::assertSame(8, $interval->getStart()->hours());
+        self::assertSame(0, $interval->getStart()->minutes());
 
-        self::assertEquals(18, $interval->getEnd()->hours());
-        self::assertEquals(30, $interval->getEnd()->minutes());
+        self::assertSame(18, $interval->getEnd()->hours());
+        self::assertSame(30, $interval->getEnd()->minutes());
     }
 
     /**

@@ -1,25 +1,2 @@
 parameters:
-	ignoreErrors:
-		-
-			rawMessage: 'Cannot call method getEnd() on Speicher210\BusinessHours\Day\Time\TimeIntervalInterface|null.'
-			identifier: method.nonObject
-			count: 16
-			path: ../tests/Day/DayTest.php
-
-		-
-			rawMessage: 'Cannot call method getStart() on Speicher210\BusinessHours\Day\Time\TimeIntervalInterface|null.'
-			identifier: method.nonObject
-			count: 16
-			path: ../tests/Day/DayTest.php
-
-		-
-			rawMessage: 'Parameter #1 $roundingMode of method Speicher210\BusinessHours\Day\Time\Time::roundToHour() expects 1|2|5|6, int given.'
-			identifier: argument.type
-			count: 1
-			path: ../tests/Day/Time/TimeTest.php
-
-		-
-			rawMessage: 'Parameter #2 $roundingMode of method Speicher210\BusinessHours\Day\Time\Time::roundToMinutes() expects 1|2|5|6, int given.'
-			identifier: argument.type
-			count: 1
-			path: ../tests/Day/Time/TimeTest.php
+	ignoreErrors: []
