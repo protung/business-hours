@@ -1,8 +1,15 @@
+# phpstorm project files
 .idea/
+
+# composer vendor dir
+/vendor/
+
+# build cache
+/build/
 /config/.phpcs-cache
 /config/.phpunit.cache
-infection.log
-phpunit.xml
-build/
+/config/infection.log
+
+# user specific
 composer.lock
-vendor
+phpunit.xml
