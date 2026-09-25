@@ -1,25 +1,127 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
+			rawMessage: 'Cannot call method getClosestNextOpeningHoursInterval() on Speicher210\BusinessHours\Day\DayInterface|null.'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/BusinessHours.php
+
+		-
+			rawMessage: 'Cannot call method getClosestPreviousOpeningHoursInterval() on Speicher210\BusinessHours\Day\DayInterface|null.'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/BusinessHours.php
+
+		-
+			rawMessage: 'Cannot call method getClosingTime() on Speicher210\BusinessHours\Day\DayInterface|null.'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/BusinessHours.php
+
+		-
+			rawMessage: 'Cannot call method getOpeningTime() on Speicher210\BusinessHours\Day\DayInterface|null.'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/BusinessHours.php
+
+		-
+			rawMessage: 'Loose comparison via "==" between DateTimeInterface and DateTimeInterface is not allowed.'
 			identifier: equal.notAllowed
 			count: 2
 			path: ../src/BusinessHours.php
 
 		-
-			message: '#^Unsafe usage of new static\(\)\.$#'
+			rawMessage: 'Parameter #2 $timeInterval of method Speicher210\BusinessHours\BusinessHours::buildDateTimeInterval() expects Speicher210\BusinessHours\Day\Time\TimeIntervalInterface, Speicher210\BusinessHours\Day\Time\TimeIntervalInterface|null given.'
+			identifier: argument.type
+			count: 2
+			path: ../src/BusinessHours.php
+
+		-
+			rawMessage: 'Parameter #1 $data of static method Speicher210\BusinessHours\Day\DayBuilder::fromAssociativeArray() expects array<mixed>, mixed given.'
+			identifier: argument.type
+			count: 1
+			path: ../src/BusinessHoursBuilder.php
+
+		-
+			rawMessage: 'Parameter #1 $timezone of class DateTimeZone constructor expects string, mixed given.'
+			identifier: argument.type
+			count: 1
+			path: ../src/BusinessHoursBuilder.php
+
+		-
+			rawMessage: Cannot access offset 'end' on mixed.
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../src/Day/DayBuilder.php
+
+		-
+			rawMessage: Cannot access offset 'start' on mixed.
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../src/Day/DayBuilder.php
+
+		-
+			rawMessage: 'Parameter #1 $data of static method Speicher210\BusinessHours\Day\Time\Time::fromArray() expects array{hours: int, minutes?: int, seconds?: int}, mixed given.'
+			identifier: argument.type
+			count: 2
+			path: ../src/Day/DayBuilder.php
+
+		-
+			rawMessage: 'Parameter #1 $dayOfWeek of class Speicher210\BusinessHours\Day\AllDay constructor expects int, mixed given.'
+			identifier: argument.type
+			count: 1
+			path: ../src/Day/DayBuilder.php
+
+		-
+			rawMessage: 'Parameter #1 $dayOfWeek of class Speicher210\BusinessHours\Day\Day constructor expects int, mixed given.'
+			identifier: argument.type
+			count: 1
+			path: ../src/Day/DayBuilder.php
+
+		-
+			rawMessage: 'Parameter #1 $time of static method Speicher210\BusinessHours\Day\Time\Time::fromString() expects string, mixed given.'
+			identifier: argument.type
+			count: 2
+			path: ../src/Day/DayBuilder.php
+
+		-
+			rawMessage: 'Unsafe usage of new static().'
 			identifier: new.static
 			count: 1
 			path: ../src/Day/Time/TimeInterval.php
 
 		-
-			message: '#^Parameter \#1 \$roundingMode of method Speicher210\\BusinessHours\\Day\\Time\\Time\:\:roundToHour\(\) expects 1\|2\|5\|6, int given\.$#'
+			rawMessage: 'Cannot call method getEnd() on Speicher210\BusinessHours\Day\Time\TimeIntervalInterface|null.'
+			identifier: method.nonObject
+			count: 16
+			path: ../tests/Day/DayTest.php
+
+		-
+			rawMessage: 'Cannot call method getStart() on Speicher210\BusinessHours\Day\Time\TimeIntervalInterface|null.'
+			identifier: method.nonObject
+			count: 16
+			path: ../tests/Day/DayTest.php
+
+		-
+			rawMessage: 'Parameter #1 $roundingMode of method Speicher210\BusinessHours\Day\Time\Time::roundToHour() expects 1|2|5|6, int given.'
 			identifier: argument.type
 			count: 1
 			path: ../tests/Day/Time/TimeTest.php
 
 		-
-			message: '#^Parameter \#2 \$roundingMode of method Speicher210\\BusinessHours\\Day\\Time\\Time\:\:roundToMinutes\(\) expects 1\|2\|5\|6, int given\.$#'
+			rawMessage: 'Parameter #1 $time of static method Speicher210\BusinessHours\Day\Time\Time::fromString() expects string, mixed given.'
+			identifier: argument.type
+			count: 1
+			path: ../tests/Day/Time/TimeTest.php
+
+		-
+			rawMessage: 'Parameter #2 $roundingMode of method Speicher210\BusinessHours\Day\Time\Time::roundToMinutes() expects 1|2|5|6, int given.'
+			identifier: argument.type
+			count: 1
+			path: ../tests/Day/Time/TimeTest.php
+
+		-
+			rawMessage: 'Parameter #2 ...$args of function Psl\Str\format expects float|int|string, mixed given.'
 			identifier: argument.type
 			count: 1
 			path: ../tests/Day/Time/TimeTest.php
