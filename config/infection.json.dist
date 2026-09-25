@@ -1,9 +1,14 @@
 {
+    "$schema": "../vendor/infection/infection/resources/schema.json",
     "source": {
         "directories": [
             "../src"
         ]
     },
+    "threads": "max",
+    "initialTestsPhpOptions": "-d pcov.enabled=1",
+    "minMsi": 92,
+    "minCoveredMsi": 92,
     "logs": {
         "text": "infection.log"
     },

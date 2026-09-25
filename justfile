@@ -123,6 +123,11 @@ test: test-php
 test-php *args="":
     vendor/bin/phpunit -c config/phpunit.xml.dist {{ args }}
 
+[doc("Run mutation tests (needs pcov)")]
+[group("Tests")]
+test-mutation *args="":
+    vendor/bin/infection --configuration=config/infection.json.dist {{ args }}
+
 [doc("Run all checks")]
 [group("Aggregate")]
 check: coding-standard-check static-analysis security-analysis test
