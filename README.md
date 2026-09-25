@@ -1,7 +1,7 @@
 Business Hours
 ==============
 
-[![Build](https://github.com/protung/business-hours/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/protung/business-hours/actions/workflows/build.yml?query=branch%3Amaster)
+[![Build](https://github.com/protung/business-hours/actions/workflows/build.yml/badge.svg?branch=3.x)](https://github.com/protung/business-hours/actions/workflows/build.yml?query=branch%3A3.x)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
 
 ## Installation
