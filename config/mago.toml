@@ -1,0 +1,64 @@
+# Welcome to Mago!
+# For full documentation, see https://mago.carthage.software/tools/overview
+php-version = "8.3.0"
+
+[source]
+paths = ["src/", "tests/"]
+includes = ["vendor"]
+
+[formatter]
+print-width = 120
+tab-width = 4
+use-tabs = false
+
+[linter]
+integrations = ["psl", "phpunit"]
+
+[linter.rules]
+literal-named-argument = { enabled = false }
+halstead = { volume-threshold = 3_200, effort-threshold = 24_000, difficulty-threshold = 32 }
+kan-defect = { enabled = false }
+cyclomatic-complexity = { enabled = false }
+too-many-methods = { enabled = false }
+too-many-properties = { enabled = false }
+excessive-parameter-list = { enabled = false }
+no-boolean-flag-parameter = { enabled = false }
+no-else-clause = { enabled = false }
+prefer-early-continue = { enabled = false }
+class-name = { enabled = false }
+interface-name = { enabled = false }
+trait-name = { enabled = false }
+yoda-conditions = { enabled = false }
+assertion-style = { style = "self" }
+psl-array-functions = { enabled = false }
+psl-datetime = { enabled = false }
+psl-string-functions = { enabled = false }
+
+# Rules the code still violates, disabled until the violations are fixed
+strict-assertions = { enabled = false } # 30 errors
+readable-literal = { enabled = false } # 16 errors
+explicit-octal = { enabled = false } # 12 errors
+psl-math-functions = { enabled = false } # 6 errors
+no-isset = { enabled = false } # 4 errors
+identity-comparison = { enabled = false } # 2 errors
+assert-description = { enabled = false } # 2 errors
+prefer-first-class-callable = { enabled = false } # 1 error
+no-multi-assignments = { enabled = false } # 1 error
+
+[analyzer]
+find-unused-definitions = true
+analyze-dead-code = true
+check-throws = true
+allow-possibly-undefined-array-keys = true
+perform-heuristic-checks = true
+
+# Ignore a specific error code across the whole project
+ignore = [
+    "unhandled-thrown-type", # 145 errors
+    "possible-method-access-on-null", # 36 errors
+    "mixed-method-access", # 32 errors
+    "mixed-argument", # 14 errors
+    "mixed-assignment", # 7 errors
+    "unsafe-instantiation", # 1 error
+    "impossible-condition", # 1 error
+]
