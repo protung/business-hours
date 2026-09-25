@@ -121,6 +121,22 @@ final class BusinessHoursBuilderTest extends TestCase
         self::assertNotSame($original, $actual);
     }
 
+    public function testShiftToTimezoneKeepsTheOriginalTimezoneWhenTheOffsetIsZero(): void
+    {
+        $original = new BusinessHours(
+            [new Day(Day::WEEK_DAY_MONDAY, [TimeInterval::fromString('10:00', '18:00')])],
+            new DateTimeZone('UTC'),
+        );
+
+        $actual = BusinessHoursBuilder::shiftToTimezone(
+            $original,
+            new DateTimeImmutable('2020-01-06 12:00', new DateTimeZone('Europe/London')),
+        );
+
+        self::assertEquals($original, $actual);
+        self::assertSame('UTC', $actual->getTimezone()->getName());
+    }
+
     /**
      * @return Generator<string,array<DateTimeZone|DateTimeImmutable|BusinessHours>>
      */

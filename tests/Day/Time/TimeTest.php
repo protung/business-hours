@@ -41,6 +41,13 @@ class TimeTest extends TestCase
         new Time($hours, $minutes, $seconds);
     }
 
+    public function testInstantiateTimeWithHoursOnly(): void
+    {
+        $time = new Time(10);
+
+        self::assertSame('10:00:00', $time->asString());
+    }
+
     /**
      * @return list<array{string, class-string<Throwable>}>
      */
@@ -141,6 +148,7 @@ class TimeTest extends TestCase
             [0, 0, 0, 0],
             [40, 0, 0, 40],
             [60, 0, 1, 0],
+            [3599, 0, 59, 59],
             [3600, 1, 0, 0],
             [86_400, 24, 0, 0],
             [45_296, 12, 34, 56],
@@ -595,6 +603,13 @@ class TimeTest extends TestCase
 
         $actual = Time::max(...$times);
         self::assertEquals(Time::fromString('22:00:01'), $actual);
+    }
+
+    public function testMaxFindsALargerTimeAfterASmallerOne(): void
+    {
+        $actual = Time::max(Time::fromString('10:00'), Time::fromString('09:00'), Time::fromString('11:00'));
+
+        self::assertEquals(Time::fromString('11:00'), $actual);
     }
 
     public function testAsString(): void

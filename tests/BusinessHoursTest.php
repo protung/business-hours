@@ -100,6 +100,9 @@ class BusinessHoursTest extends TestCase
             // Monday / Friday
             [$business, new DateTime('2016-03-28 09:00:00'), new DateTime('2016-03-25 17:30:00', $utcTimeZone)],
             [$business, new DateTimeImmutable('2016-03-28 09:00:00'), new DateTimeImmutable('2016-03-25 17:30:00', $utcTimeZone)],
+            // Wednesday / Monday
+            [$business, new DateTime('2016-03-09 09:00:00'), new DateTime('2016-03-07 18:00:00', $utcTimeZone)],
+            [$business, new DateTimeImmutable('2016-03-09 09:00:00'), new DateTimeImmutable('2016-03-07 18:00:00', $utcTimeZone)],
             // Wednesday
             [$business, new DateTime('2016-03-30 12:30:00'), new DateTime('2016-03-30 12:15:00', $utcTimeZone)],
             [$business, new DateTimeImmutable('2016-03-30 12:30:00'), new DateTimeImmutable('2016-03-30 12:15:00', $utcTimeZone)],

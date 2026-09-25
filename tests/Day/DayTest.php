@@ -149,6 +149,14 @@ class DayTest extends TestCase
         self::assertSame(0, $nextInterval->getEnd()->minutes());
     }
 
+    public function testGetPreviousOpeningHoursIntervalWhileAtTheEndOfAnInterval(): void
+    {
+        $day          = DayBuilder::fromArray(Day::WEEK_DAY_MONDAY, [['09:00', '10 AM'], ['12:15', '2 pm'], ['14:30', '18:25']]);
+        $nextInterval = $day->getPreviousOpeningHoursInterval(new Time(14, 0));
+
+        self::assertEquals(TimeInterval::fromString('12:15', '14:00'), $nextInterval);
+    }
+
     public function testGetPreviousOpeningHoursIntervalWhileOutsideIntervals(): void
     {
         $day          = DayBuilder::fromArray(Day::WEEK_DAY_MONDAY, [['09:00', '10 AM'], ['12:00', '2 pm'], ['14:30', '18:30']]);
@@ -182,6 +190,14 @@ class DayTest extends TestCase
         self::assertSame(30, $nextInterval->getStart()->minutes());
         self::assertSame(18, $nextInterval->getEnd()->hours());
         self::assertSame(25, $nextInterval->getEnd()->minutes());
+    }
+
+    public function testGetNextOpeningHoursIntervalWhileAtTheStartOfAnInterval(): void
+    {
+        $day          = DayBuilder::fromArray(Day::WEEK_DAY_MONDAY, [['09:00', '10 AM'], ['12:00', '2 pm'], ['14:30', '18:25']]);
+        $nextInterval = $day->getNextOpeningHoursInterval(new Time(14, 30));
+
+        self::assertEquals(TimeInterval::fromString('14:30', '18:25'), $nextInterval);
     }
 
     public function testGetNextOpeningHoursIntervalWhileOutsideIntervals(): void
@@ -234,6 +250,22 @@ class DayTest extends TestCase
     public function testIsWithinOpeningHours(Day $day, int $hours, int $minutes, bool $expected): void
     {
         self::assertEquals($expected, $day->isWithinOpeningHours(new Time($hours, $minutes)));
+    }
+
+    public function testGetDaysOfWeek(): void
+    {
+        self::assertSame(
+            [
+                DayInterface::WEEK_DAY_MONDAY,
+                DayInterface::WEEK_DAY_TUESDAY,
+                DayInterface::WEEK_DAY_WEDNESDAY,
+                DayInterface::WEEK_DAY_THURSDAY,
+                DayInterface::WEEK_DAY_FRIDAY,
+                DayInterface::WEEK_DAY_SATURDAY,
+                DayInterface::WEEK_DAY_SUNDAY,
+            ],
+            Day::getDaysOfWeek(),
+        );
     }
 
     public function testGetDayOfWeekName(): void

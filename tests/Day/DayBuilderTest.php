@@ -66,6 +66,13 @@ class DayBuilderTest extends TestCase
         DayBuilder::fromAssociativeArray($data); // @phpstan-ignore argument.type (invalid structures are under test)
     }
 
+    public function testFromArrayReturnsDayForIntervalUntilMidnightNotStartingAtMidnight(): void
+    {
+        $actual = DayBuilder::fromArray(Day::WEEK_DAY_MONDAY, [['00:30', '24:00']]);
+
+        self::assertEquals(new Day(Day::WEEK_DAY_MONDAY, [TimeInterval::fromString('00:30', '24:00')]), $actual);
+    }
+
     public function testFromAssociativeArrayReturnsAllDay(): void
     {
         $data = [
