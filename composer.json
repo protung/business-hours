@@ -61,26 +61,5 @@
     "branch-alias": {
       "dev-master": "3.0-dev"
     }
-  },
-  "scripts": {
-    "analyse": [
-      "@analyse-phpstan"
-    ],
-    "analyse-phpstan": [
-      "phpstan analyse --memory-limit=512M --configuration=config/phpstan.neon"
-    ],
-    "analyse-phpstan-update": [
-      "phpstan analyse --configuration=config/phpstan.neon --generate-baseline=config/phpstan-baseline.neon"
-    ],
-    "check": [
-      "composer validate",
-      "composer normalize --dry-run",
-      "@cs-check",
-      "@analyse",
-      "@test"
-    ],
-    "cs-check": "phpcs -p --basepath=. --standard=config/phpcs.xml",
-    "cs-fix": "phpcbf -p --basepath=. --standard=config/phpcs.xml",
-    "test": "phpunit --testdox --configuration=config/phpunit.xml.dist"
   }
 }

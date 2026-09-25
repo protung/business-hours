@@ -47,5 +47,8 @@ jobs:
         if: ${{ matrix.dependencies == 'highest' }}
         run: composer update --prefer-dist --no-progress --no-suggest
 
+      - name: Setup just
+        uses: extractions/setup-just@v4
+
       - name: Run checks
-        run: composer check
+        run: just check

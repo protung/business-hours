@@ -117,7 +117,7 @@ $businessHoursBerlin->within($dateBerlin); // false
 ## Testing
 
 ``` bash
-$ vendor/bin/phpunit --configuration=config/phpunit.xml.dist
+$ just test
 ```
 
 ## Contributing

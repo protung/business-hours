@@ -7,3 +7,4 @@
 /config             export-ignore
 /.github            export-ignore
 /tests              export-ignore
+/justfile           export-ignore
