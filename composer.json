@@ -1,24 +1,25 @@
 {
   "name": "speicher210/business-hours",
-  "description": "DateTime and business hours (opening, closing times) calculations",
+  "description": "Business hours for each day of the week: check whether a date and time is within them, find the next or previous opening or closing, and shift them to another timezone.",
   "license": "MIT",
   "type": "library",
   "keywords": [
-    "business",
-    "opening",
-    "closing",
-    "hours"
+    "business hours",
+    "opening hours",
+    "opening times",
+    "closing times",
+    "time interval",
+    "timezone",
+    "schedule"
   ],
   "authors": [
     {
       "name": "Dragos Protung",
-      "email": "dragos@protung.de",
-      "role": "Developer"
+      "email": "dragos@protung.de"
     },
     {
       "name": "Cezary Stępkowski",
-      "email": "cezary.stepkowski@speicher210.com",
-      "role": "Developer"
+      "email": "cezary.stepkowski@protonmail.com"
     }
   ],
   "homepage": "https://github.com/protung/business-hours",
@@ -31,14 +32,16 @@
   "require-dev": {
     "doctrine/coding-standard": "^14.0.0",
     "ekino/phpstan-banned-code": "^3.2.0",
-    "ergebnis/composer-normalize": "^2.52.0",
-    "phpstan/phpstan": "^2.2.0",
-    "phpstan/phpstan-deprecation-rules": "^2.0.4",
-    "phpstan/phpstan-phpunit": "^2.0.16",
-    "phpstan/phpstan-strict-rules": "^2.0.11",
+    "ergebnis/composer-normalize": "^2.54.0",
+    "phpstan/phpstan": "^2.2.15",
+    "phpstan/phpstan-deprecation-rules": "^2.0.5",
+    "phpstan/phpstan-phpunit": "^2.0.18",
+    "phpstan/phpstan-strict-rules": "^2.0.12",
     "phpstan/phpstan-webmozart-assert": "^2.0.0",
-    "phpunit/phpunit": "^12.5.28"
+    "phpunit/phpunit": "^12.5.35",
+    "roave/security-advisories": "dev-master"
   },
+  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "Speicher210\\BusinessHours\\": "src"
@@ -51,9 +54,11 @@
   },
   "config": {
     "allow-plugins": {
-      "composer/package-versions-deprecated": true,
       "dealerdirect/phpcodesniffer-composer-installer": true,
       "ergebnis/composer-normalize": true
+    },
+    "preferred-install": {
+      "*": "dist"
     },
     "sort-packages": true
   },
