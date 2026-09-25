@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Speicher210\BusinessHours\Test\Day;
+namespace Speicher210\BusinessHours\Tests\Day;
 
 use InvalidArgumentException;
 use OutOfBoundsException;

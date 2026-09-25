@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Speicher210\BusinessHours\Test;
+namespace Speicher210\BusinessHours\Tests;
 
 use DateTime;
 use DateTimeImmutable;

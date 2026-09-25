@@ -29,7 +29,7 @@
         <properties>
             <property name="rootNamespaces" type="array">
                 <element key="src" value="Speicher210\BusinessHours"/>
-                <element key="tests" value="Speicher210\BusinessHours\Test"/>
+                <element key="tests" value="Speicher210\BusinessHours\Tests"/>
             </property>
         </properties>
     </rule>

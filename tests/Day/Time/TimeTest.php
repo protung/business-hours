@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Speicher210\BusinessHours\Test\Day\Time;
+namespace Speicher210\BusinessHours\Tests\Day\Time;
 
 use DateTime;
 use InvalidArgumentException;

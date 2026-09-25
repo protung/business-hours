@@ -49,7 +49,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Speicher210\\BusinessHours\\Test\\": "tests"
+      "Speicher210\\BusinessHours\\Tests\\": "tests"
     }
   },
   "config": {

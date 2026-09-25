@@ -5,7 +5,6 @@
 /vendor/
 
 # build cache
-/build/
 /config/.phpcs-cache
 /config/.phpunit.cache
 /config/infection.log
