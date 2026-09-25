@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Speicher210\BusinessHours\Day\Time;
 
+use DateMalformedStringException;
 use InvalidArgumentException;
 use Override;
 use Psl\Str;
+use Psl\Type\Exception\CoercionException;
 
 class TimeInterval implements TimeIntervalInterface
 {
@@ -30,7 +32,9 @@ class TimeInterval implements TimeIntervalInterface
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws CoercionException If a time is empty.
+     * @throws DateMalformedStringException If a time can not be parsed.
+     * @throws InvalidArgumentException If a time is after 24:00 or the start is not before the end.
      */
     public static function fromString(string $startTime, string $endTime): self
     {

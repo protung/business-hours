@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace Speicher210\BusinessHours\Tests\Day\Time;
 
+use DateMalformedStringException;
 use DateTime;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psl\Json;
-use Psl\Str;
+use Psl\Type\Exception\CoercionException;
 use Speicher210\BusinessHours\Day\Time\Time;
+use Throwable;
+
+use const PHP_ROUND_HALF_EVEN;
 
 class TimeTest extends TestCase
 {
@@ -40,26 +44,25 @@ class TimeTest extends TestCase
     }
 
     /**
-     * @return mixed[]
+     * @return list<array{string, class-string<Throwable>}>
      */
     public static function dataProviderTestFromStringInvalid(): array
     {
         return [
-            ['invalid'],
-            ['24:00:01'],
-            ['25:00'],
-            [''],
+            ['invalid', DateMalformedStringException::class],
+            ['24:00:01', InvalidArgumentException::class],
+            ['25:00', DateMalformedStringException::class],
+            ['', CoercionException::class],
         ];
     }
 
     /**
-     * @param mixed $string The string to test.
+     * @param class-string<Throwable> $expectedException
      */
     #[DataProvider('dataProviderTestFromStringInvalid')]
-    public function testFromStringInvalid(mixed $string): void
+    public function testFromStringInvalid(string $string, string $expectedException): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(Str\format('Invalid time "%s".', $string));
+        $this->expectException($expectedException);
 
         Time::fromString($string);
     }
@@ -153,6 +156,15 @@ class TimeTest extends TestCase
         self::assertEquals($expectedHours, $time->hours());
         self::assertEquals($expectedMinutes, $time->minutes());
         self::assertEquals($expectedSeconds, $time->seconds());
+    }
+
+    public function testFromArrayWithoutHours(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Array is not valid.');
+
+        // @mago-expect analysis:possibly-invalid-argument Leaving out the hours is under test.
+        Time::fromArray(['minutes' => 30]); // @phpstan-ignore argument.type (leaving out the hours is under test)
     }
 
     /**
@@ -485,6 +497,14 @@ class TimeTest extends TestCase
         $actual = $time->roundToMinutes($precision, $roundingMode);
 
         self::assertEquals($expected, $actual);
+    }
+
+    public function testRoundToMinutesWithInvalidRoundingMode(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid rounding mode "3", expected one of the Time::ROUND_* constants.');
+
+        (new Time(10))->roundToMinutes(15, PHP_ROUND_HALF_EVEN); // @phpstan-ignore argument.type (an unsupported rounding mode is under test)
     }
 
     /**

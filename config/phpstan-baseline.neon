@@ -109,19 +109,7 @@ parameters:
 			path: ../tests/Day/Time/TimeTest.php
 
 		-
-			rawMessage: 'Parameter #1 $time of static method Speicher210\BusinessHours\Day\Time\Time::fromString() expects string, mixed given.'
-			identifier: argument.type
-			count: 1
-			path: ../tests/Day/Time/TimeTest.php
-
-		-
 			rawMessage: 'Parameter #2 $roundingMode of method Speicher210\BusinessHours\Day\Time\Time::roundToMinutes() expects 1|2|5|6, int given.'
-			identifier: argument.type
-			count: 1
-			path: ../tests/Day/Time/TimeTest.php
-
-		-
-			rawMessage: 'Parameter #2 ...$args of function Psl\Str\format expects float|int|string, mixed given.'
 			identifier: argument.type
 			count: 1
 			path: ../tests/Day/Time/TimeTest.php

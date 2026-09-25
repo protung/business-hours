@@ -54,10 +54,10 @@ perform-heuristic-checks = true
 
 # Ignore a specific error code across the whole project
 ignore = [
-    "unhandled-thrown-type", # 145 errors
+    "unhandled-thrown-type", # 199 errors
     "possible-method-access-on-null", # 36 errors
     "mixed-method-access", # 32 errors
-    "mixed-argument", # 14 errors
+    "mixed-argument", # 12 errors
     "mixed-assignment", # 7 errors
     "unsafe-instantiation", # 1 error
     "impossible-condition", # 1 error

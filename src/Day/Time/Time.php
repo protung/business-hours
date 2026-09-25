@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Speicher210\BusinessHours\Day\Time;
 
+use DateMalformedStringException;
 use DateTime;
 use DateTimeInterface;
 use InvalidArgumentException;
 use JsonSerializable;
 use Override;
+use Psl\Iter;
 use Psl\Math;
 use Psl\Str;
 use Psl\Type;
-use Throwable;
-use Webmozart\Assert\Assert;
+use Psl\Type\Exception\CoercionException;
 
+use function array_key_exists;
 use function round;
 use function str_starts_with;
 
@@ -56,19 +58,13 @@ class Time implements JsonSerializable
     }
 
     /**
-     * @throws InvalidArgumentException If the passed time is invalid.
+     * @throws CoercionException If the time is empty.
+     * @throws DateMalformedStringException If the time can not be parsed.
+     * @throws InvalidArgumentException If the time is after 24:00.
      */
     public static function fromString(string $time): Time
     {
-        Assert::notEmpty($time, 'Invalid time %s.');
-
-        try {
-            $date = new DateTime($time);
-        } catch (Throwable $e) {
-            throw new InvalidArgumentException(Str\format('Invalid time "%s".', $time), 0, $e);
-        }
-
-        $return = static::fromDate($date);
+        $return = static::fromDate(new DateTime(Type\non_empty_string()->coerce($time)));
         if (str_starts_with($time, '24')) {
             return $return->withHours(24);
         }
@@ -104,7 +100,9 @@ class Time implements JsonSerializable
      */
     public static function fromArray(array $data): Time
     {
-        Assert::keyExists($data, 'hours', 'Array is not valid.');
+        if (! array_key_exists('hours', $data)) {
+            throw new InvalidArgumentException('Array is not valid.');
+        }
 
         return new Time(
             $data['hours'],
@@ -285,15 +283,18 @@ class Time implements JsonSerializable
 
     private function assertRoundingMode(int $roundingMode): void
     {
-        Assert::oneOf(
-            $roundingMode,
-            [
-                self::ROUND_HALF_UP,
-                self::ROUND_HALF_DOWN,
-                self::ROUND_UP,
-                self::ROUND_DOWN,
-            ],
-        );
+        $roundingModes = [
+            self::ROUND_HALF_UP,
+            self::ROUND_HALF_DOWN,
+            self::ROUND_UP,
+            self::ROUND_DOWN,
+        ];
+
+        if (! Iter\contains($roundingModes, $roundingMode)) {
+            throw new InvalidArgumentException(
+                Str\format('Invalid rounding mode "%d", expected one of the Time::ROUND_* constants.', $roundingMode),
+            );
+        }
     }
 
     /**
