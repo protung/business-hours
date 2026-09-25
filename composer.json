@@ -67,10 +67,10 @@
       "@analyse-phpstan"
     ],
     "analyse-phpstan": [
-      "phpstan analyse --memory-limit=512M"
+      "phpstan analyse --memory-limit=512M --configuration=config/phpstan.neon"
     ],
     "analyse-phpstan-update": [
-      "phpstan analyse --generate-baseline"
+      "phpstan analyse --configuration=config/phpstan.neon --generate-baseline=config/phpstan-baseline.neon"
     ],
     "check": [
       "composer validate",
@@ -79,8 +79,8 @@
       "@analyse",
       "@test"
     ],
-    "cs-check": "phpcs -p",
-    "cs-fix": "phpcbf -p",
-    "test": "phpunit --testdox"
+    "cs-check": "phpcs -p --basepath=. --standard=config/phpcs.xml",
+    "cs-fix": "phpcbf -p --basepath=. --standard=config/phpcs.xml",
+    "test": "phpunit --testdox --configuration=config/phpunit.xml.dist"
   }
 }

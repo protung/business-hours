@@ -1,6 +1,6 @@
 .idea/
-.phpcs-cache
-.phpunit.result.cache
+/config/.phpcs-cache
+/config/.phpunit.cache
 infection.log
 phpunit.xml
 build/
