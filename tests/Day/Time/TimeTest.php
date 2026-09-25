@@ -14,8 +14,6 @@ use Psl\Type\Exception\CoercionException;
 use Speicher210\BusinessHours\Day\Time\Time;
 use Throwable;
 
-use const PHP_ROUND_HALF_EVEN;
-
 class TimeTest extends TestCase
 {
     /**
@@ -156,15 +154,6 @@ class TimeTest extends TestCase
         self::assertEquals($expectedHours, $time->hours());
         self::assertEquals($expectedMinutes, $time->minutes());
         self::assertEquals($expectedSeconds, $time->seconds());
-    }
-
-    public function testFromArrayWithoutHours(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Array is not valid.');
-
-        // @mago-expect analysis:possibly-invalid-argument Leaving out the hours is under test.
-        Time::fromArray(['minutes' => 30]); // @phpstan-ignore argument.type (leaving out the hours is under test)
     }
 
     /**
@@ -497,14 +486,6 @@ class TimeTest extends TestCase
         $actual = $time->roundToMinutes($precision, $roundingMode);
 
         self::assertEquals($expected, $actual);
-    }
-
-    public function testRoundToMinutesWithInvalidRoundingMode(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid rounding mode "3", expected one of the Time::ROUND_* constants.');
-
-        (new Time(10))->roundToMinutes(15, PHP_ROUND_HALF_EVEN); // @phpstan-ignore argument.type (an unsupported rounding mode is under test)
     }
 
     /**

@@ -38,7 +38,8 @@ class TimeInterval implements TimeIntervalInterface
      */
     public static function fromString(string $startTime, string $endTime): self
     {
-        return new static(Time::fromString($startTime), Time::fromString($endTime));
+        // @mago-expect analysis:unsafe-instantiation Subclasses build an instance of their own class.
+        return new static(Time::fromString($startTime), Time::fromString($endTime)); // @phpstan-ignore new.static (subclasses build an instance of their own class)
     }
 
     #[Override]

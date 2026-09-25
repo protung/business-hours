@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Speicher210\BusinessHours\Day;
 
+use Psl;
+use Psl\Iter;
 use Psl\Type;
 use Speicher210\BusinessHours\Day\Time\Time;
 use Speicher210\BusinessHours\Day\Time\TimeInterval;
 use Speicher210\BusinessHours\Day\Time\TimeIntervalInterface;
-
-use function assert;
-use function reset;
 
 /**
  * @phpstan-import-type TimeArray from Time
@@ -36,10 +35,9 @@ final class DayBuilder
             }
         }
 
-        $day          = new Day($dayOfWeek, $intervals);
-        $dayIntervals = $day->getOpeningHoursIntervals();
-        $dayInterval  = reset($dayIntervals);
-        assert($dayInterval instanceof TimeIntervalInterface);
+        $day         = new Day($dayOfWeek, $intervals);
+        $dayInterval = Iter\first($day->getOpeningHoursIntervals())
+            ?? Psl\invariant_violation('A day always has at least one opening interval.');
         if (self::isIntervalAllDay($dayInterval->getStart(), $dayInterval->getEnd())) {
             return new AllDay($dayOfWeek);
         }

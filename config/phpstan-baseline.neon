@@ -1,48 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			rawMessage: 'Cannot call method getClosestNextOpeningHoursInterval() on Speicher210\BusinessHours\Day\DayInterface|null.'
-			identifier: method.nonObject
-			count: 1
-			path: ../src/BusinessHours.php
-
-		-
-			rawMessage: 'Cannot call method getClosestPreviousOpeningHoursInterval() on Speicher210\BusinessHours\Day\DayInterface|null.'
-			identifier: method.nonObject
-			count: 1
-			path: ../src/BusinessHours.php
-
-		-
-			rawMessage: 'Cannot call method getClosingTime() on Speicher210\BusinessHours\Day\DayInterface|null.'
-			identifier: method.nonObject
-			count: 1
-			path: ../src/BusinessHours.php
-
-		-
-			rawMessage: 'Cannot call method getOpeningTime() on Speicher210\BusinessHours\Day\DayInterface|null.'
-			identifier: method.nonObject
-			count: 1
-			path: ../src/BusinessHours.php
-
-		-
-			rawMessage: 'Loose comparison via "==" between DateTimeInterface and DateTimeInterface is not allowed.'
-			identifier: equal.notAllowed
-			count: 2
-			path: ../src/BusinessHours.php
-
-		-
-			rawMessage: 'Parameter #2 $timeInterval of method Speicher210\BusinessHours\BusinessHours::buildDateTimeInterval() expects Speicher210\BusinessHours\Day\Time\TimeIntervalInterface, Speicher210\BusinessHours\Day\Time\TimeIntervalInterface|null given.'
-			identifier: argument.type
-			count: 2
-			path: ../src/BusinessHours.php
-
-		-
-			rawMessage: 'Unsafe usage of new static().'
-			identifier: new.static
-			count: 1
-			path: ../src/Day/Time/TimeInterval.php
-
-		-
 			rawMessage: 'Cannot call method getEnd() on Speicher210\BusinessHours\Day\Time\TimeIntervalInterface|null.'
 			identifier: method.nonObject
 			count: 16

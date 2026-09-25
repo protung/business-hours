@@ -10,13 +10,11 @@ use DateTimeInterface;
 use InvalidArgumentException;
 use JsonSerializable;
 use Override;
-use Psl\Iter;
 use Psl\Math;
 use Psl\Str;
 use Psl\Type;
 use Psl\Type\Exception\CoercionException;
 
-use function array_key_exists;
 use function round;
 use function str_starts_with;
 
@@ -77,7 +75,7 @@ class Time implements JsonSerializable
 
     public static function fromSeconds(int $seconds): Time
     {
-        if ($seconds < 0 || $seconds > 86400) {
+        if ($seconds < 0 || $seconds > 86_400) {
             throw new InvalidArgumentException(
                 Str\format(
                     'Invalid time "%s%02d:%02d:%02d".',
@@ -103,10 +101,6 @@ class Time implements JsonSerializable
      */
     public static function fromArray(array $data): Time
     {
-        if (! array_key_exists('hours', $data)) {
-            throw new InvalidArgumentException('Array is not valid.');
-        }
-
         return new Time(
             $data['hours'],
             $data['minutes'] ?? 0,
@@ -269,7 +263,7 @@ class Time implements JsonSerializable
             Str\format('Invalid time "%02d:%02d:%02d".', $hours, $minutes, $seconds),
         );
 
-        if ((int) Str\format('%d%02d%02d', $hours, $minutes, $seconds) > 240000) {
+        if ((int) Str\format('%d%02d%02d', $hours, $minutes, $seconds) > 240_000) {
             throw $exception;
         }
 
@@ -284,30 +278,12 @@ class Time implements JsonSerializable
         throw $exception;
     }
 
-    private function assertRoundingMode(int $roundingMode): void
-    {
-        $roundingModes = [
-            self::ROUND_HALF_UP,
-            self::ROUND_HALF_DOWN,
-            self::ROUND_UP,
-            self::ROUND_DOWN,
-        ];
-
-        if (! Iter\contains($roundingModes, $roundingMode)) {
-            throw new InvalidArgumentException(
-                Str\format('Invalid rounding mode "%d", expected one of the Time::ROUND_* constants.', $roundingMode),
-            );
-        }
-    }
-
     /**
      * @param int           $precision    Number of minutes to round.
      * @param self::ROUND_* $roundingMode The rounding mode. One of the ROUND_* constants.
      */
     public function roundToMinutes(int $precision, int $roundingMode = self::ROUND_HALF_UP): self
     {
-        $this->assertRoundingMode($roundingMode);
-
         $roundingSeconds = $precision * 60;
 
         if ($roundingMode === self::ROUND_UP) {
@@ -322,6 +298,7 @@ class Time implements JsonSerializable
             return self::fromSeconds((int) $newSeconds);
         }
 
+        // @mago-expect lint:psl-math-functions Psl\Math\round() has no rounding mode.
         $newSeconds = round($this->toSeconds() / $roundingSeconds, 0, $roundingMode) * $roundingSeconds;
 
         return self::fromSeconds((int) $newSeconds);

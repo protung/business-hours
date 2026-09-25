@@ -14,6 +14,7 @@ namespace Speicher210\BusinessHours\Day;
 use InvalidArgumentException;
 use OutOfBoundsException;
 use Override;
+use Psl;
 use Psl\Iter;
 use Psl\Str;
 use Psl\Type;
@@ -23,10 +24,7 @@ use Speicher210\BusinessHours\Day\Time\TimeInterval;
 use Speicher210\BusinessHours\Day\Time\TimeIntervalInterface;
 
 use function array_reverse;
-use function assert;
 use function count;
-use function end;
-use function max;
 
 abstract class AbstractDay implements DayInterface
 {
@@ -166,8 +164,8 @@ abstract class AbstractDay implements DayInterface
     #[Override]
     public function getClosingTime(): Time
     {
-        $interval = end($this->openingHoursIntervals);
-        assert($interval instanceof TimeIntervalInterface);
+        $interval = Iter\last($this->openingHoursIntervals)
+            ?? Psl\invariant_violation('A day always has at least one opening interval.');
 
         return $interval->getEnd();
     }
@@ -189,7 +187,7 @@ abstract class AbstractDay implements DayInterface
      */
     protected function setDayOfWeek(int $dayOfWeek): void
     {
-        if (! isset(self::DAYS_OF_WEEK[$dayOfWeek])) {
+        if (! Iter\contains_key(self::DAYS_OF_WEEK, $dayOfWeek)) {
             throw new OutOfBoundsException(Str\format('Invalid day of week "%s".', $dayOfWeek));
         }
 
@@ -199,7 +197,7 @@ abstract class AbstractDay implements DayInterface
     /**
      * @param TimeIntervalInterface[] $openingHoursIntervals The opening hours intervals.
      *
-     * @throws InvalidArgumentException If no days are passed or invalid interval is passed.
+     * @throws InvalidArgumentException If no intervals are passed.
      */
     protected function setOpeningHoursIntervals(array $openingHoursIntervals): void
     {
@@ -207,17 +205,7 @@ abstract class AbstractDay implements DayInterface
             throw new InvalidArgumentException('The day must have at least one opening interval.');
         }
 
-        $intervals = [];
-
-        foreach ($openingHoursIntervals as $interval) {
-            if (! $interval instanceof TimeIntervalInterface) {
-                throw new InvalidArgumentException(Str\format('Interval must be a %s', TimeIntervalInterface::class));
-            }
-
-            $intervals[] = $interval;
-        }
-
-        $this->openingHoursIntervals = $this->flattenOpeningHoursIntervals($intervals);
+        $this->openingHoursIntervals = $this->flattenOpeningHoursIntervals($openingHoursIntervals);
     }
 
     /**
@@ -239,7 +227,7 @@ abstract class AbstractDay implements DayInterface
             if ($interval->getStart()->lessThanOrEqual($tmpInterval->getEnd())) {
                 $tmpInterval = new TimeInterval(
                     $tmpInterval->getStart(),
-                    max($tmpInterval->getEnd(), $interval->getEnd()),
+                    Time::max($tmpInterval->getEnd(), $interval->getEnd()),
                 );
             } else {
                 $intervals[] = $tmpInterval;

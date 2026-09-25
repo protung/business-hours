@@ -7,6 +7,7 @@ namespace Speicher210\BusinessHours;
 use DateTimeInterface;
 use DateTimeZone;
 use Psl\Dict;
+use Psl\Math;
 use Psl\Type;
 use Psl\Vec;
 use Speicher210\BusinessHours\Day\Day;
@@ -16,8 +17,6 @@ use Speicher210\BusinessHours\Day\Time\Time;
 use Speicher210\BusinessHours\Day\Time\TimeInterval;
 
 use function array_fill_keys;
-use function max;
-use function min;
 
 /**
  * @phpstan-import-type DayArray from DayBuilder
@@ -69,9 +68,9 @@ final class BusinessHoursBuilder
                 $end   = $interval->getEnd()->toSeconds() + $offset;
 
                 // Current day.
-                if ($start < 86400 && $end > 0) {
-                    $startForCurrentDay = max($start, 0);
-                    $endForCurrentDay   = min($end, 86400);
+                if ($start < 86_400 && $end > 0) {
+                    $startForCurrentDay = Math\maxva($start, 0);
+                    $endForCurrentDay   = Math\minva($end, 86_400);
 
                     $dayOfWeek             = $day->getDayOfWeek();
                     $interval              = new TimeInterval(
@@ -83,8 +82,8 @@ final class BusinessHoursBuilder
 
                 // Previous day.
                 if ($start < 0) {
-                    $startForPreviousDay = 86400 + $start;
-                    $endForPreviousDay   = min(86400, 86400 + $end);
+                    $startForPreviousDay = 86_400 + $start;
+                    $endForPreviousDay   = Math\minva(86_400, 86_400 + $end);
 
                     $dayOfWeek             = self::getPreviousDayOfWeek($day->getDayOfWeek());
                     $interval              = new TimeInterval(
@@ -95,12 +94,12 @@ final class BusinessHoursBuilder
                 }
 
                 // Next day.
-                if ($end <= 86400) {
+                if ($end <= 86_400) {
                     continue;
                 }
 
-                $startForNextDay = max(0, $start - 86400);
-                $endForNextDay   = $end - 86400;
+                $startForNextDay = Math\maxva(0, $start - 86_400);
+                $endForNextDay   = $end - 86_400;
 
                 $dayOfWeek             = self::getNextDayOfWeek($day->getDayOfWeek());
                 $interval              = new TimeInterval(
@@ -115,7 +114,7 @@ final class BusinessHoursBuilder
             Dict\sort_by_key(
                 Dict\filter($tmpDays, static fn (array $intervals): bool => $intervals !== []),
             ),
-            static fn (int $dayOfWeek, array $intervals): Day => DayBuilder::fromArray($dayOfWeek, $intervals),
+            DayBuilder::fromArray(...),
         );
 
         return new BusinessHours($days, $newTimezone);

@@ -16,6 +16,7 @@ use DateTimeInterface;
 use DateTimeZone;
 use InvalidArgumentException;
 use Override;
+use Psl;
 use Psl\Str;
 use Speicher210\BusinessHours\Day\DayInterface;
 use Speicher210\BusinessHours\Day\Time\Time;
@@ -98,8 +99,7 @@ class BusinessHours implements BusinessHoursInterface
         $dateInterval = $this->getNextClosestInterval($tmpDate);
 
         if ($this->within($date)) {
-            // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator
-            return $date == $dateInterval->getStart() ? $dateInterval->getStart() : $dateInterval->getEnd();
+            return ($date <=> $dateInterval->getStart()) === 0 ? $dateInterval->getStart() : $dateInterval->getEnd();
         }
 
         return $dateInterval->getStart();
@@ -113,8 +113,7 @@ class BusinessHours implements BusinessHoursInterface
         );
 
         if ($this->within($date)) {
-            // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator
-            return $date == $dateInterval->getEnd() ? $dateInterval->getEnd() : $dateInterval->getStart();
+            return ($date <=> $dateInterval->getEnd()) === 0 ? $dateInterval->getEnd() : $dateInterval->getStart();
         }
 
         return $dateInterval->getEnd();
@@ -145,7 +144,8 @@ class BusinessHours implements BusinessHoursInterface
         $closestDay = $this->getClosestDayBefore((int) $tmpDate->format('N'));
 
         $closingTime = $closestDay->getClosingTime();
-        $closestTime = $closestDay->getClosestPreviousOpeningHoursInterval($closingTime);
+        $closestTime = $closestDay->getClosestPreviousOpeningHoursInterval($closingTime)
+            ?? Psl\invariant_violation('The closing time of a day is always within its last opening interval.');
 
         return $this->buildDateTimeInterval($tmpDate, $closestTime);
     }
@@ -161,7 +161,8 @@ class BusinessHours implements BusinessHoursInterface
         $closestDay = $this->getClosestDayBefore((int) $tmpDate->format('N'));
 
         $openingTime = $closestDay->getOpeningTime();
-        $closestTime = $closestDay->getClosestNextOpeningHoursInterval($openingTime);
+        $closestTime = $closestDay->getClosestNextOpeningHoursInterval($openingTime)
+            ?? Psl\invariant_violation('The opening time of a day is always within its first opening interval.');
 
         return $this->buildDateTimeInterval($tmpDate, $closestTime);
     }
@@ -199,7 +200,7 @@ class BusinessHours implements BusinessHoursInterface
 
         $dayOfWeek  = (int) $tmpDate->format('N');
         $closestDay = $this->getClosestDayBefore($dayOfWeek);
-        if ($closestDay !== null && $closestDay->getDayOfWeek() !== $dayOfWeek) {
+        if ($closestDay->getDayOfWeek() !== $dayOfWeek) {
             $tmpDate = $tmpDate->modify(Str\format('last %s', $closestDay->getDayOfWeekName()));
         }
 
@@ -216,7 +217,7 @@ class BusinessHours implements BusinessHoursInterface
         $dayOfWeek  = (int) $tmpDate->format('N');
         $closestDay = $this->getClosestDayAfter($dayOfWeek);
 
-        if ($closestDay !== null && $closestDay->getDayOfWeek() !== $dayOfWeek) {
+        if ($closestDay->getDayOfWeek() !== $dayOfWeek) {
             $tmpDate = $tmpDate->modify(Str\format('next %s', $closestDay->getDayOfWeekName()));
         }
 
@@ -266,7 +267,7 @@ class BusinessHours implements BusinessHoursInterface
     /**
      * Get the closest business hours day before a given day number (including it).
      */
-    private function getClosestDayBefore(int $dayNumber): DayInterface|null
+    private function getClosestDayBefore(int $dayNumber): DayInterface
     {
         $day = $this->getDay($dayNumber);
 
@@ -276,7 +277,7 @@ class BusinessHours implements BusinessHoursInterface
     /**
      * Get the closest business hours day after a given day number (including it).
      */
-    private function getClosestDayAfter(int $dayNumber): DayInterface|null
+    private function getClosestDayAfter(int $dayNumber): DayInterface
     {
         $day = $this->getDay($dayNumber);
 
@@ -286,7 +287,7 @@ class BusinessHours implements BusinessHoursInterface
     /**
      * Get the business hours day before the day number.
      */
-    private function getDayBefore(int $dayNumber): DayInterface|null
+    private function getDayBefore(int $dayNumber): DayInterface
     {
         $tmpDayNumber = $dayNumber;
 
@@ -299,13 +300,13 @@ class BusinessHours implements BusinessHoursInterface
             }
         }
 
-        return $this->getDay($dayNumber);
+        return $this->getDay($dayNumber) ?? Psl\invariant_violation('Business hours always have at least one day.');
     }
 
     /**
      * Get the business hours day after the day number.
      */
-    private function getDayAfter(int $dayNumber): DayInterface|null
+    private function getDayAfter(int $dayNumber): DayInterface
     {
         $tmpDayNumber = $dayNumber;
 
@@ -318,7 +319,7 @@ class BusinessHours implements BusinessHoursInterface
             }
         }
 
-        return $this->getDay($dayNumber);
+        return $this->getDay($dayNumber) ?? Psl\invariant_violation('Business hours always have at least one day.');
     }
 
     /**
