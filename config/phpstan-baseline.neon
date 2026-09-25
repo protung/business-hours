@@ -37,54 +37,6 @@ parameters:
 			path: ../src/BusinessHours.php
 
 		-
-			rawMessage: 'Parameter #1 $data of static method Speicher210\BusinessHours\Day\DayBuilder::fromAssociativeArray() expects array<mixed>, mixed given.'
-			identifier: argument.type
-			count: 1
-			path: ../src/BusinessHoursBuilder.php
-
-		-
-			rawMessage: 'Parameter #1 $timezone of class DateTimeZone constructor expects string, mixed given.'
-			identifier: argument.type
-			count: 1
-			path: ../src/BusinessHoursBuilder.php
-
-		-
-			rawMessage: Cannot access offset 'end' on mixed.
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: ../src/Day/DayBuilder.php
-
-		-
-			rawMessage: Cannot access offset 'start' on mixed.
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: ../src/Day/DayBuilder.php
-
-		-
-			rawMessage: 'Parameter #1 $data of static method Speicher210\BusinessHours\Day\Time\Time::fromArray() expects array{hours: int, minutes?: int, seconds?: int}, mixed given.'
-			identifier: argument.type
-			count: 2
-			path: ../src/Day/DayBuilder.php
-
-		-
-			rawMessage: 'Parameter #1 $dayOfWeek of class Speicher210\BusinessHours\Day\AllDay constructor expects int, mixed given.'
-			identifier: argument.type
-			count: 1
-			path: ../src/Day/DayBuilder.php
-
-		-
-			rawMessage: 'Parameter #1 $dayOfWeek of class Speicher210\BusinessHours\Day\Day constructor expects int, mixed given.'
-			identifier: argument.type
-			count: 1
-			path: ../src/Day/DayBuilder.php
-
-		-
-			rawMessage: 'Parameter #1 $time of static method Speicher210\BusinessHours\Day\Time\Time::fromString() expects string, mixed given.'
-			identifier: argument.type
-			count: 2
-			path: ../src/Day/DayBuilder.php
-
-		-
 			rawMessage: 'Unsafe usage of new static().'
 			identifier: new.static
 			count: 1

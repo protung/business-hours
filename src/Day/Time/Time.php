@@ -23,6 +23,9 @@ use function str_starts_with;
 use const PHP_ROUND_HALF_DOWN;
 use const PHP_ROUND_HALF_UP;
 
+/**
+ * @phpstan-type TimeArray array{hours: int, minutes?: int, seconds?: int}
+ */
 class Time implements JsonSerializable
 {
     public const int ROUND_HALF_UP = PHP_ROUND_HALF_UP;
@@ -96,7 +99,7 @@ class Time implements JsonSerializable
     }
 
     /**
-     * @param array{hours: int, minutes?: int, seconds?: int} $data
+     * @param TimeArray $data
      */
     public static function fromArray(array $data): Time
     {

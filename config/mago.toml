@@ -39,13 +39,14 @@ strict-assertions = { enabled = false } # 30 errors
 readable-literal = { enabled = false } # 16 errors
 explicit-octal = { enabled = false } # 12 errors
 psl-math-functions = { enabled = false } # 6 errors
-no-isset = { enabled = false } # 4 errors
+no-isset = { enabled = false } # 1 error
 identity-comparison = { enabled = false } # 2 errors
 assert-description = { enabled = false } # 2 errors
 prefer-first-class-callable = { enabled = false } # 1 error
 no-multi-assignments = { enabled = false } # 1 error
 
 [analyzer]
+plugins = ["psl"]
 find-unused-definitions = true
 analyze-dead-code = true
 check-throws = true
@@ -54,11 +55,11 @@ perform-heuristic-checks = true
 
 # Ignore a specific error code across the whole project
 ignore = [
-    "unhandled-thrown-type", # 199 errors
+    "unhandled-thrown-type", # 200 errors
     "possible-method-access-on-null", # 36 errors
     "mixed-method-access", # 32 errors
-    "mixed-argument", # 12 errors
-    "mixed-assignment", # 7 errors
+    "mixed-argument", # 4 errors
+    "mixed-assignment", # 4 errors
     "unsafe-instantiation", # 1 error
     "impossible-condition", # 1 error
 ]

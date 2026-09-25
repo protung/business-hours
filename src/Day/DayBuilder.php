@@ -4,20 +4,23 @@ declare(strict_types=1);
 
 namespace Speicher210\BusinessHours\Day;
 
-use InvalidArgumentException;
+use Psl\Type;
 use Speicher210\BusinessHours\Day\Time\Time;
 use Speicher210\BusinessHours\Day\Time\TimeInterval;
 use Speicher210\BusinessHours\Day\Time\TimeIntervalInterface;
 
 use function assert;
-use function is_array;
 use function reset;
 
+/**
+ * @phpstan-import-type TimeArray from Time
+ * @phpstan-type DayArray array{dayOfWeek: int, openingIntervals: list<array{start: TimeArray, end: TimeArray}>, allDay?: bool}
+ */
 final class DayBuilder
 {
     /**
-     * @param int     $dayOfWeek        The day of week.
-     * @param mixed[] $openingIntervals The opening intervals.
+     * @param int                                               $dayOfWeek        The day of week.
+     * @param list<TimeIntervalInterface|array{string, string}> $openingIntervals The opening intervals.
      */
     public static function fromArray(int $dayOfWeek, array $openingIntervals): Day
     {
@@ -25,7 +28,7 @@ final class DayBuilder
         foreach ($openingIntervals as $interval) {
             if ($interval instanceof TimeIntervalInterface) {
                 $intervals[] = $interval;
-            } elseif (is_array($interval)) {
+            } else {
                 $intervals[] = new TimeInterval(
                     Time::fromString($interval[0]),
                     Time::fromString($interval[1]),
@@ -45,20 +48,14 @@ final class DayBuilder
     }
 
     /**
-     * @param mixed[] $data The day data.
+     * @param DayArray $data The day data.
      */
     public static function fromAssociativeArray(array $data): DayInterface
     {
-        if (! isset($data['openingIntervals'], $data['dayOfWeek']) || ! is_array($data['openingIntervals'])) {
-            throw new InvalidArgumentException('Array is not valid.');
-        }
+        $data = self::associativeArrayType()->coerce($data);
 
         $openingIntervals = [];
         foreach ($data['openingIntervals'] as $openingInterval) {
-            if (! isset($openingInterval['start'], $openingInterval['end'])) {
-                throw new InvalidArgumentException('Array is not valid.');
-            }
-
             $start = Time::fromArray($openingInterval['start']);
             $end   = Time::fromArray($openingInterval['end']);
             if (self::isIntervalAllDay($start, $end)) {
@@ -69,6 +66,26 @@ final class DayBuilder
         }
 
         return new Day($data['dayOfWeek'], $openingIntervals);
+    }
+
+    /**
+     * @internal
+     *
+     * @return Type\TypeInterface<DayArray>
+     */
+    public static function associativeArrayType(): Type\TypeInterface
+    {
+        $time = Type\shape([
+            'hours' => Type\int(),
+            'minutes' => Type\optional(Type\int()),
+            'seconds' => Type\optional(Type\int()),
+        ]);
+
+        return Type\shape([
+            'dayOfWeek' => Type\int(),
+            'openingIntervals' => Type\vec(Type\shape(['start' => $time, 'end' => $time])),
+            'allDay' => Type\optional(Type\bool()),
+        ]);
     }
 
     private static function isIntervalAllDay(Time $start, Time $end): bool

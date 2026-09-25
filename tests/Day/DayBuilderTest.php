@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Speicher210\BusinessHours\Tests\Day;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Psl\Type\Exception\CoercionException;
 use Speicher210\BusinessHours\Day\AllDay;
 use Speicher210\BusinessHours\Day\Day;
 use Speicher210\BusinessHours\Day\DayBuilder;
@@ -60,10 +60,10 @@ class DayBuilderTest extends TestCase
     #[DataProvider('dataProviderTestFromAssociativeArrayThrowsExceptionIfArrayStructureIsNotValid')]
     public function testFromAssociativeArrayThrowsExceptionIfArrayStructureIsNotValid(array $data): void
     {
-        $this->expectExceptionMessage('Array is not valid.');
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(CoercionException::class);
 
-        DayBuilder::fromAssociativeArray($data);
+        // @mago-expect analysis:possibly-invalid-argument Invalid structures are under test.
+        DayBuilder::fromAssociativeArray($data); // @phpstan-ignore argument.type (invalid structures are under test)
     }
 
     public function testFromAssociativeArrayReturnsAllDay(): void

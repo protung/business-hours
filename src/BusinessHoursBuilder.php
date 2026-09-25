@@ -6,8 +6,8 @@ namespace Speicher210\BusinessHours;
 
 use DateTimeInterface;
 use DateTimeZone;
-use InvalidArgumentException;
 use Psl\Dict;
+use Psl\Type;
 use Psl\Vec;
 use Speicher210\BusinessHours\Day\Day;
 use Speicher210\BusinessHours\Day\DayBuilder;
@@ -16,29 +16,30 @@ use Speicher210\BusinessHours\Day\Time\Time;
 use Speicher210\BusinessHours\Day\Time\TimeInterval;
 
 use function array_fill_keys;
-use function is_array;
 use function max;
 use function min;
 
+/**
+ * @phpstan-import-type DayArray from DayBuilder
+ */
 final class BusinessHoursBuilder
 {
     /**
      * Build a BusinessHours from an array.
      *
-     * @param mixed[] $data The business hours data.
+     * @param array{days: array<int, DayArray>, timezone: non-empty-string} $data The business hours data.
      */
     public static function fromAssociativeArray(array $data): BusinessHours
     {
-        if (! isset($data['days'], $data['timezone']) || ! is_array($data['days'])) {
-            throw new InvalidArgumentException('Array is not valid.');
-        }
+        $data = Type\shape([
+            'days' => Type\dict(Type\int(), DayBuilder::associativeArrayType()),
+            'timezone' => Type\non_empty_string(),
+        ])->coerce($data);
 
-        $days = [];
-        foreach ($data['days'] as $day) {
-            $days[] = DayBuilder::fromAssociativeArray($day);
-        }
-
-        return new BusinessHours($days, new DateTimeZone($data['timezone']));
+        return new BusinessHours(
+            Vec\map($data['days'], DayBuilder::fromAssociativeArray(...)),
+            new DateTimeZone($data['timezone']),
+        );
     }
 
     /**
