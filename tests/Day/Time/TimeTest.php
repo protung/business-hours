@@ -274,7 +274,8 @@ class TimeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid time "24:00:01".');
 
-        $newTime = $time->addHours(14);
+        // @todo php:>=8.5 use a (void) cast instead of $_
+        $_ = $time->addHours(14); // phpcs:ignore Squiz.NamingConventions.ValidVariableName.NotCamelCaps
     }
 
     public function testSubtractHours(): void
@@ -294,7 +295,8 @@ class TimeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid time "-03:59:59".');
 
-        $newTime = $time->subtractHours(14);
+        // @todo php:>=8.5 use a (void) cast instead of $_
+        $_ = $time->subtractHours(14); // phpcs:ignore Squiz.NamingConventions.ValidVariableName.NotCamelCaps
     }
 
     public function testWithMinutes(): void
@@ -324,7 +326,8 @@ class TimeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid time "24:01:00".');
 
-        $newTime = $time->addMinutes(1);
+        // @todo php:>=8.5 use a (void) cast instead of $_
+        $_ = $time->addMinutes(1); // phpcs:ignore Squiz.NamingConventions.ValidVariableName.NotCamelCaps
     }
 
     public function testSubtractMinutes(): void
@@ -344,7 +347,8 @@ class TimeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid time "-00:01:00".');
 
-        $newTime = $time->subtractMinutes(1);
+        // @todo php:>=8.5 use a (void) cast instead of $_
+        $_ = $time->subtractMinutes(1); // phpcs:ignore Squiz.NamingConventions.ValidVariableName.NotCamelCaps
     }
 
     public function testWithSeconds(): void
@@ -374,7 +378,8 @@ class TimeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid time "24:00:01".');
 
-        $newTime = $time->addSeconds(1);
+        // @todo php:>=8.5 use a (void) cast instead of $_
+        $_ = $time->addSeconds(1); // phpcs:ignore Squiz.NamingConventions.ValidVariableName.NotCamelCaps
     }
 
     public function testSubtractSeconds(): void
@@ -394,7 +399,8 @@ class TimeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid time "-00:00:01".');
 
-        $newTime = $time->subtractSeconds(1);
+        // @todo php:>=8.5 use a (void) cast instead of $_
+        $_ = $time->subtractSeconds(1); // phpcs:ignore Squiz.NamingConventions.ValidVariableName.NotCamelCaps
     }
 
     /**
@@ -423,7 +429,8 @@ class TimeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid time "24:00:01".');
 
-        $newTime = Time::fromString('22:45')->addTime(Time::fromString('01:15:01'));
+        // @todo php:>=8.5 use a (void) cast instead of $_
+        $_ = Time::fromString('22:45')->addTime(Time::fromString('01:15:01')); // phpcs:ignore Squiz.NamingConventions.ValidVariableName.NotCamelCaps
     }
 
     /**
@@ -452,7 +459,8 @@ class TimeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid time "-00:00:01".');
 
-        $newTime = Time::fromString('01:45')->subtractTime(Time::fromString('01:45:01'));
+        // @todo php:>=8.5 use a (void) cast instead of $_
+        $_ = Time::fromString('01:45')->subtractTime(Time::fromString('01:45:01')); // phpcs:ignore Squiz.NamingConventions.ValidVariableName.NotCamelCaps
     }
 
     /**

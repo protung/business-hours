@@ -44,5 +44,5 @@ perform-heuristic-checks = true
 
 # Ignore a specific error code across the whole project
 ignore = [
-    "unhandled-thrown-type", # 204 errors
+    "unhandled-thrown-type", # 227 errors
 ]

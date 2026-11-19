@@ -269,7 +269,7 @@ class Time implements JsonSerializable
      *
      * @throws InvalidArgumentException If the elements are not valid.
      */
-    private function assertTimeElementsAreValid(int $hours, int $minutes, int $seconds): bool
+    private function assertTimeElementsAreValid(int $hours, int $minutes, int $seconds): void
     {
         $exception = new InvalidArgumentException(
             Str\format('Invalid time "%02d:%02d:%02d".', $hours, $minutes, $seconds),
@@ -283,11 +283,9 @@ class Time implements JsonSerializable
             throw $exception;
         }
 
-        if ($hours <= 24 && $minutes <= 59 && $seconds <= 59) {
-            return true;
+        if ($hours > 24 || $minutes > 59 || $seconds > 59) {
+            throw $exception;
         }
-
-        throw $exception;
     }
 
     /**
